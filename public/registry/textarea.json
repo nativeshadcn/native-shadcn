@@ -1,0 +1,17 @@
+{
+  "name": "textarea",
+  "type": "ui",
+  "description": "Multi-line text input",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/textarea.tsx",
+      "content": "import * as React from 'react';\nimport { TextInput } from 'react-native';\nimport { cn } from '@/lib/utils';\n\nexport interface TextareaProps\n  extends React.ComponentPropsWithoutRef<typeof TextInput> {\n  className?: string;\n}\n\nconst Textarea = React.forwardRef<\n  React.ElementRef<typeof TextInput>,\n  TextareaProps\n>(({ className, ...props }, ref) => {\n  return (\n    <TextInput\n      ref={ref}\n      multiline\n      numberOfLines={4}\n      textAlignVertical=\"top\"\n      className={cn(\n        'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:border-ring disabled:cursor-not-allowed disabled:opacity-50',\n        className\n      )}\n      {...props}\n    />\n  );\n});\nTextarea.displayName = 'Textarea';\n\nexport { Textarea };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

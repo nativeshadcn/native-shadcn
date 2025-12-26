@@ -1,0 +1,17 @@
+{
+  "name": "label",
+  "type": "ui",
+  "description": "Form label component",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/label.tsx",
+      "content": "import * as React from 'react';\nimport { Text } from 'react-native';\nimport { cn } from '@/lib/utils';\n\nexport interface LabelProps extends React.ComponentPropsWithoutRef<typeof Text> {}\n\nconst Label = React.forwardRef<React.ElementRef<typeof Text>, LabelProps>(\n  ({ className, ...props }, ref) => (\n    <Text\n      ref={ref}\n      className={cn(\n        'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',\n        className\n      )}\n      {...props}\n    />\n  )\n);\n\nLabel.displayName = 'Label';\n\nexport { Label };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

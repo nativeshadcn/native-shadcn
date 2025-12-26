@@ -1,0 +1,17 @@
+{
+  "name": "popover",
+  "type": "ui",
+  "description": "A popover component",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/popover.tsx",
+      "content": "import * as React from 'react';\nimport { Modal, View, Pressable } from 'react-native';\nimport { cn } from '@/lib/utils';\n\ntype PopoverContextValue = {\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n};\n\nconst PopoverContext = React.createContext<PopoverContextValue | undefined>(undefined);\n\nfunction usePopover() {\n  const context = React.useContext(PopoverContext);\n  if (!context) {\n    throw new Error('Popover components must be used within <Popover>');\n  }\n  return context;\n}\n\ninterface PopoverProps {\n  open?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  children?: React.ReactNode;\n}\n\nconst Popover = ({ open = false, onOpenChange, children }: PopoverProps) => {\n  const [internalOpen, setInternalOpen] = React.useState(open);\n\n  const isControlled = open !== undefined && onOpenChange !== undefined;\n  const currentOpen = isControlled ? open : internalOpen;\n  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;\n\n  const contextValue = React.useMemo(\n    () => ({\n      open: currentOpen,\n      onOpenChange: handleOpenChange,\n    }),\n    [currentOpen, handleOpenChange]\n  );\n\n  return (\n    <PopoverContext.Provider value={contextValue}>\n      <Modal\n        visible={currentOpen}\n        transparent\n        animationType=\"fade\"\n        onRequestClose={() => handleOpenChange(false)}\n      >\n        {children}\n      </Modal>\n    </PopoverContext.Provider>\n  );\n};\n\nconst PopoverTrigger = React.forwardRef<\n  React.ElementRef<typeof Pressable>,\n  React.ComponentPropsWithoutRef<typeof Pressable>\n>(({ onPress, ...props }, ref) => {\n  const { onOpenChange } = usePopover();\n\n  return (\n    <Pressable\n      ref={ref}\n      onPress={(e) => {\n        onOpenChange(true);\n        onPress?.(e);\n      }}\n      {...props}\n    />\n  );\n});\nPopoverTrigger.displayName = 'PopoverTrigger';\n\nconst PopoverContent = React.forwardRef<\n  React.ElementRef<typeof View>,\n  React.ComponentPropsWithoutRef<typeof View>\n>(({ className, children, ...props }, ref) => {\n  const { onOpenChange } = usePopover();\n\n  return (\n    <View className=\"flex-1 items-center justify-center p-4\">\n      <Pressable \n        className=\"absolute inset-0\" \n        onPress={() => onOpenChange(false)}\n      />\n      <View\n        ref={ref}\n        className={cn(\n          'rounded-lg bg-background p-4 shadow-lg border border-border',\n          className\n        )}\n        {...props}\n      >\n        {children}\n      </View>\n    </View>\n  );\n});\nPopoverContent.displayName = 'PopoverContent';\n\nconst PopoverClose = React.forwardRef<\n  React.ElementRef<typeof Pressable>,\n  React.ComponentPropsWithoutRef<typeof Pressable>\n>(({ onPress, ...props }, ref) => {\n  const { onOpenChange } = usePopover();\n\n  return (\n    <Pressable\n      ref={ref}\n      onPress={(e) => {\n        onOpenChange(false);\n        onPress?.(e);\n      }}\n      {...props}\n    />\n  );\n});\nPopoverClose.displayName = 'PopoverClose';\n\nexport { Popover, PopoverTrigger, PopoverContent, PopoverClose };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

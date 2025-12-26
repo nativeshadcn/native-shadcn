@@ -1,0 +1,17 @@
+{
+  "name": "switch",
+  "type": "ui",
+  "description": "A toggle switch component",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/switch.tsx",
+      "content": "import * as React from 'react';\nimport { Switch as RNSwitch } from 'react-native';\n\nexport interface SwitchProps extends React.ComponentPropsWithoutRef<typeof RNSwitch> {\n  checked?: boolean;\n  onCheckedChange?: (checked: boolean) => void;\n}\n\nconst Switch = React.forwardRef<React.ElementRef<typeof RNSwitch>, SwitchProps>(\n  ({ checked, onCheckedChange, value, onValueChange, ...props }, ref) => {\n    return (\n      <RNSwitch\n        ref={ref}\n        value={checked ?? value}\n        onValueChange={onCheckedChange ?? onValueChange}\n        trackColor={{ false: '#e5e7eb', true: '#86efac' }}\n        thumbColor={checked || value ? '#22c55e' : '#f3f4f6'}\n        {...props}\n      />\n    );\n  }\n);\n\nSwitch.displayName = 'Switch';\n\nexport { Switch };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

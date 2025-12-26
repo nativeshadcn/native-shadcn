@@ -1,0 +1,17 @@
+{
+  "name": "collapsible",
+  "type": "ui",
+  "description": "Collapsible content container",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/collapsible.tsx",
+      "content": "import * as React from 'react';\nimport { View, Animated, Pressable } from 'react-native';\nimport { cn } from '@/lib/utils';\n\ntype CollapsibleContextValue = {\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n};\n\nconst CollapsibleContext = React.createContext<CollapsibleContextValue | undefined>(undefined);\n\nfunction useCollapsible() {\n  const context = React.useContext(CollapsibleContext);\n  if (!context) {\n    throw new Error('Collapsible components must be used within <Collapsible>');\n  }\n  return context;\n}\n\ninterface CollapsibleProps {\n  open?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  children?: React.ReactNode;\n  className?: string;\n}\n\nconst Collapsible = ({ open = false, onOpenChange, children, className }: CollapsibleProps) => {\n  const [internalOpen, setInternalOpen] = React.useState(open);\n\n  const isControlled = open !== undefined && onOpenChange !== undefined;\n  const currentOpen = isControlled ? open : internalOpen;\n  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;\n\n  const contextValue = React.useMemo(\n    () => ({\n      open: currentOpen,\n      onOpenChange: handleOpenChange,\n    }),\n    [currentOpen, handleOpenChange]\n  );\n\n  return (\n    <CollapsibleContext.Provider value={contextValue}>\n      <View className={cn(className)}>{children}</View>\n    </CollapsibleContext.Provider>\n  );\n};\n\nconst CollapsibleTrigger = React.forwardRef<\n  React.ElementRef<typeof Pressable>,\n  React.ComponentPropsWithoutRef<typeof Pressable>\n>(({ className, onPress, ...props }, ref) => {\n  const { open, onOpenChange } = useCollapsible();\n\n  return (\n    <Pressable\n      ref={ref}\n      className={cn(className)}\n      onPress={(e) => {\n        onOpenChange(!open);\n        onPress?.(e);\n      }}\n      {...props}\n    />\n  );\n});\nCollapsibleTrigger.displayName = 'CollapsibleTrigger';\n\ninterface CollapsibleContentProps extends React.ComponentPropsWithoutRef<typeof View> {}\n\nconst CollapsibleContent = React.forwardRef<\n  React.ElementRef<typeof View>,\n  CollapsibleContentProps\n>(({ className, children, ...props }, ref) => {\n  const { open } = useCollapsible();\n  const [height] = React.useState(new Animated.Value(open ? 1 : 0));\n\n  React.useEffect(() => {\n    Animated.timing(height, {\n      toValue: open ? 1 : 0,\n      duration: 200,\n      useNativeDriver: false,\n    }).start();\n  }, [open, height]);\n\n  return (\n    <Animated.View\n      ref={ref}\n      style={{\n        maxHeight: height.interpolate({\n          inputRange: [0, 1],\n          outputRange: [0, 1000],\n        }),\n        opacity: height,\n      }}\n      className={cn('overflow-hidden', className)}\n      {...props}\n    >\n      {children}\n    </Animated.View>\n  );\n});\nCollapsibleContent.displayName = 'CollapsibleContent';\n\nexport { Collapsible, CollapsibleTrigger, CollapsibleContent };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

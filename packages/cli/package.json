@@ -1,0 +1,62 @@
+{
+  "name": "native-shadcn-ui",
+  "version": "0.1.0-beta",
+  "description": "CLI for adding Native ShadCN components to your React Native project",
+  "main": "dist/index.js",
+  "bin": {
+    "native-shadcn": "dist/index.js",
+    "native-shadcn-cli": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cli",
+    "react-native",
+    "shadcn",
+    "nativewind",
+    "ui",
+    "components",
+    "tailwind",
+    "expo",
+    "mobile"
+  ],
+  "author": "mreshnaan <mreshnaan7@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nativeshadcn/native-shadcn.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/nativeshadcn/native-shadcn/issues"
+  },
+  "homepage": "https://github.com/nativeshadcn/native-shadcn#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "cosmiconfig": "^9.0.0",
+    "execa": "^5.1.1",
+    "https-proxy-agent": "^7.0.2",
+    "node-fetch": "^2.7.0",
+    "ora": "^5.4.1",
+    "prompts": "^2.4.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/prompts": "^2.4.9",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  }
+}

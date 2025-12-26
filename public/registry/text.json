@@ -1,0 +1,18 @@
+{
+  "name": "text",
+  "type": "ui",
+  "description": "Typography component with variants",
+  "dependencies": [
+    "class-variance-authority",
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/text.tsx",
+      "content": "import * as React from 'react';\nimport { Text as RNText } from 'react-native';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\nconst textVariants = cva('text-foreground', {\n  variants: {\n    variant: {\n      default: '',\n      muted: 'text-muted-foreground',\n      destructive: 'text-destructive',\n      success: 'text-green-600',\n    },\n    size: {\n      default: 'text-base',\n      sm: 'text-sm',\n      lg: 'text-lg',\n      xl: 'text-xl',\n      '2xl': 'text-2xl',\n      '3xl': 'text-3xl',\n    },\n    weight: {\n      normal: 'font-normal',\n      medium: 'font-medium',\n      semibold: 'font-semibold',\n      bold: 'font-bold',\n    },\n  },\n  defaultVariants: {\n    variant: 'default',\n    size: 'default',\n    weight: 'normal',\n  },\n});\n\nexport interface TextProps\n  extends React.ComponentPropsWithoutRef<typeof RNText>,\n    VariantProps<typeof textVariants> {}\n\nconst Text = React.forwardRef<React.ElementRef<typeof RNText>, TextProps>(\n  ({ className, variant, size, weight, ...props }, ref) => {\n    return (\n      <RNText\n        className={cn(textVariants({ variant, size, weight, className }))}\n        ref={ref}\n        {...props}\n      />\n    );\n  }\n);\n\nText.displayName = 'Text';\n\nexport { Text, textVariants };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

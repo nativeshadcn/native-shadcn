@@ -1,0 +1,18 @@
+{
+  "name": "button",
+  "type": "ui",
+  "description": "A customizable button component with variants",
+  "dependencies": [
+    "class-variance-authority",
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/button.tsx",
+      "content": "import * as React from 'react';\nimport { Pressable, Text } from 'react-native';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\nconst buttonVariants = cva(\n  'flex items-center justify-center rounded-md font-medium transition-colors',\n  {\n    variants: {\n      variant: {\n        default: 'bg-primary active:opacity-90',\n        destructive: 'bg-destructive active:opacity-90',\n        outline: 'border border-input bg-background active:bg-accent',\n        secondary: 'bg-secondary active:opacity-90',\n        ghost: 'active:bg-accent',\n        link: '',\n      },\n      size: {\n        default: 'h-10 px-4 py-2',\n        sm: 'h-9 px-3',\n        lg: 'h-11 px-8',\n        icon: 'h-10 w-10',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      size: 'default',\n    },\n  }\n);\n\nconst buttonTextVariants = cva('text-center font-medium', {\n  variants: {\n    variant: {\n      default: 'text-primary-foreground',\n      destructive: 'text-destructive-foreground',\n      outline: 'text-foreground',\n      secondary: 'text-secondary-foreground',\n      ghost: 'text-foreground',\n      link: 'text-primary underline',\n    },\n    size: {\n      default: 'text-base',\n      sm: 'text-sm',\n      lg: 'text-lg',\n      icon: 'text-base',\n    },\n  },\n  defaultVariants: {\n    variant: 'default',\n    size: 'default',\n  },\n});\n\nexport interface ButtonProps\n  extends React.ComponentPropsWithoutRef<typeof Pressable>,\n    VariantProps<typeof buttonVariants> {\n  children?: React.ReactNode;\n}\n\nconst Button = React.forwardRef<\n  React.ElementRef<typeof Pressable>,\n  ButtonProps\n>(({ className, variant, size, children, ...props }, ref) => {\n  return (\n    <Pressable\n      className={cn(buttonVariants({ variant, size, className }))}\n      ref={ref}\n      {...props}\n    >\n      {typeof children === 'string' ? (\n        <Text className={cn(buttonTextVariants({ variant, size }))}>\n          {children}\n        </Text>\n      ) : (\n        children\n      )}\n    </Pressable>\n  );\n});\n\nButton.displayName = 'Button';\n\nexport { Button, buttonVariants };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "slider",
+  "type": "ui",
+  "description": "Slider for range selection",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/slider.tsx",
+      "content": "import * as React from 'react';\nimport { View, PanResponder, Animated } from 'react-native';\nimport { cn } from '@/lib/utils';\n\ninterface SliderProps extends Omit<React.ComponentPropsWithoutRef<typeof View>, 'children'> {\n  value?: number;\n  onValueChange?: (value: number) => void;\n  min?: number;\n  max?: number;\n  step?: number;\n  disabled?: boolean;\n}\n\nconst Slider = React.forwardRef<React.ElementRef<typeof View>, SliderProps>(\n  ({ className, value = 0, onValueChange, min = 0, max = 100, step = 1, disabled = false, ...props }, ref) => {\n    const [sliderWidth, setSliderWidth] = React.useState(0);\n    const [currentValue, setCurrentValue] = React.useState(value);\n    const position = React.useRef(new Animated.Value(0)).current;\n\n    React.useEffect(() => {\n      setCurrentValue(value);\n    }, [value]);\n\n    const panResponder = React.useRef(\n      PanResponder.create({\n        onStartShouldSetPanResponder: () => !disabled,\n        onMoveShouldSetPanResponder: () => !disabled,\n        onPanResponderGrant: () => {},\n        onPanResponderMove: (_, gestureState) => {\n          if (sliderWidth === 0) return;\n\n          const percentage = Math.max(0, Math.min(1, gestureState.moveX / sliderWidth));\n          const newValue = min + percentage * (max - min);\n          const steppedValue = Math.round(newValue / step) * step;\n\n          setCurrentValue(steppedValue);\n          onValueChange?.(steppedValue);\n        },\n      })\n    ).current;\n\n    const percentage = ((currentValue - min) / (max - min)) * 100;\n\n    return (\n      <View\n        ref={ref}\n        className={cn('relative h-10 w-full justify-center', className)}\n        onLayout={(e) => setSliderWidth(e.nativeEvent.layout.width)}\n        {...props}\n      >\n        <View\n          className=\"h-2 w-full rounded-full bg-secondary\"\n          {...panResponder.panHandlers}\n        >\n          <View\n            className=\"h-full rounded-full bg-primary\"\n            style={{ width: \\`\\${percentage}%\\` }}\n          />\n          <View\n            className=\"absolute top-1/2 h-5 w-5 -translate-y-1/2 rounded-full border-2 border-primary bg-background shadow-md\"\n            style={{ left: \\`\\${percentage}%\\`, marginLeft: -10 }}\n          />\n        </View>\n      </View>\n    );\n  }\n);\n\nSlider.displayName = 'Slider';\n\nexport { Slider };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

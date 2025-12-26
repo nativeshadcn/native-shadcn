@@ -1,0 +1,17 @@
+{
+  "name": "tabs",
+  "type": "ui",
+  "description": "A tabs navigation component",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/tabs.tsx",
+      "content": "import * as React from 'react';\nimport { View, Pressable, Text } from 'react-native';\nimport { cn } from '@/lib/utils';\n\ntype TabsContextValue = {\n  value: string;\n  onValueChange: (value: string) => void;\n};\n\nconst TabsContext = React.createContext<TabsContextValue | undefined>(undefined);\n\ninterface TabsProps extends React.ComponentPropsWithoutRef<typeof View> {\n  value: string;\n  onValueChange: (value: string) => void;\n}\n\nconst Tabs = React.forwardRef<React.ElementRef<typeof View>, TabsProps>(\n  ({ value, onValueChange, ...props }, ref) => {\n    return (\n      <TabsContext.Provider value={{ value, onValueChange }}>\n        <View ref={ref} {...props} />\n      </TabsContext.Provider>\n    );\n  }\n);\nTabs.displayName = 'Tabs';\n\nconst TabsList = React.forwardRef<\n  React.ElementRef<typeof View>,\n  React.ComponentPropsWithoutRef<typeof View>\n>(({ className, ...props }, ref) => (\n  <View\n    ref={ref}\n    className={cn(\n      'flex flex-row items-center justify-center rounded-md bg-muted p-1',\n      className\n    )}\n    {...props}\n  />\n));\nTabsList.displayName = 'TabsList';\n\ninterface TabsTriggerProps extends React.ComponentPropsWithoutRef<typeof Pressable> {\n  value: string;\n}\n\nconst TabsTrigger = React.forwardRef<\n  React.ElementRef<typeof Pressable>,\n  TabsTriggerProps\n>(({ className, value, children, ...props }, ref) => {\n  const context = React.useContext(TabsContext);\n  if (!context) throw new Error('TabsTrigger must be used within Tabs');\n\n  const isActive = context.value === value;\n\n  return (\n    <Pressable\n      ref={ref}\n      className={cn(\n        'flex-1 items-center justify-center rounded-sm px-3 py-1.5',\n        isActive && 'bg-background shadow-sm',\n        className\n      )}\n      onPress={() => context.onValueChange(value)}\n      {...props}\n    >\n      {typeof children === 'string' ? (\n        <Text\n          className={cn(\n            'text-sm font-medium',\n            isActive ? 'text-foreground' : 'text-muted-foreground'\n          )}\n        >\n          {children}\n        </Text>\n      ) : (\n        children\n      )}\n    </Pressable>\n  );\n});\nTabsTrigger.displayName = 'TabsTrigger';\n\ninterface TabsContentProps extends React.ComponentPropsWithoutRef<typeof View> {\n  value: string;\n}\n\nconst TabsContent = React.forwardRef<\n  React.ElementRef<typeof View>,\n  TabsContentProps\n>(({ className, value, ...props }, ref) => {\n  const context = React.useContext(TabsContext);\n  if (!context) throw new Error('TabsContent must be used within Tabs');\n\n  if (context.value !== value) return null;\n\n  return (\n    <View\n      ref={ref}\n      className={cn('mt-2', className)}\n      {...props}\n    />\n  );\n});\nTabsContent.displayName = 'TabsContent';\n\nexport { Tabs, TabsList, TabsTrigger, TabsContent };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

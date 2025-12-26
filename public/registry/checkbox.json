@@ -1,0 +1,17 @@
+{
+  "name": "checkbox",
+  "type": "ui",
+  "description": "A checkbox component",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/checkbox.tsx",
+      "content": "import * as React from 'react';\nimport { Pressable, View } from 'react-native';\nimport { cn } from '@/lib/utils';\n\nexport interface CheckboxProps extends Omit<React.ComponentPropsWithoutRef<typeof Pressable>, 'children'> {\n  checked?: boolean;\n  onCheckedChange?: (checked: boolean) => void;\n}\n\nconst Checkbox = React.forwardRef<React.ElementRef<typeof Pressable>, CheckboxProps>(\n  ({ className, checked = false, onCheckedChange, ...props }, ref) => {\n    return (\n      <Pressable\n        ref={ref}\n        className={cn(\n          'h-5 w-5 rounded border border-primary items-center justify-center',\n          checked && 'bg-primary',\n          className\n        )}\n        onPress={() => onCheckedChange?.(!checked)}\n        {...props}\n      >\n        {checked && (\n          <View className=\"h-3 w-3 bg-primary-foreground rounded-sm\" />\n        )}\n      </Pressable>\n    );\n  }\n);\n\nCheckbox.displayName = 'Checkbox';\n\nexport { Checkbox };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

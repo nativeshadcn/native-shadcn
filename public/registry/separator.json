@@ -1,0 +1,17 @@
+{
+  "name": "separator",
+  "type": "ui",
+  "description": "Visual divider between content",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/separator.tsx",
+      "content": "import * as React from 'react';\nimport { View } from 'react-native';\nimport { cn } from '@/lib/utils';\n\ninterface SeparatorProps extends React.ComponentPropsWithoutRef<typeof View> {\n  orientation?: 'horizontal' | 'vertical';\n}\n\nconst Separator = React.forwardRef<React.ElementRef<typeof View>, SeparatorProps>(\n  ({ className, orientation = 'horizontal', ...props }, ref) => (\n    <View\n      ref={ref}\n      className={cn(\n        'bg-border',\n        orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',\n        className\n      )}\n      {...props}\n    />\n  )\n);\n\nSeparator.displayName = 'Separator';\n\nexport { Separator };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

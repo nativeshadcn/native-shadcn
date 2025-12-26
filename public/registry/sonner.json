@@ -1,0 +1,18 @@
+{
+  "name": "sonner",
+  "type": "ui",
+  "description": "Modern toast notification system",
+  "dependencies": [
+    "clsx",
+    "sonner-native"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/sonner.tsx",
+      "content": "import { Toaster as SonnerToaster } from 'sonner-native';\nimport { toast } from 'sonner-native';\n\nexport const Toaster = () => {\n  return (\n    <SonnerToaster\n      position=\"top-center\"\n      toastOptions={{\n        classNames: {\n          toast: 'bg-background border-border shadow-lg',\n          title: 'text-foreground font-semibold',\n          description: 'text-muted-foreground',\n          actionButton: 'bg-primary text-primary-foreground',\n          cancelButton: 'bg-muted text-muted-foreground',\n          success: 'bg-green-50 border-green-200 text-green-900',\n          error: 'bg-red-50 border-red-200 text-red-900',\n          warning: 'bg-yellow-50 border-yellow-200 text-yellow-900',\n          info: 'bg-blue-50 border-blue-200 text-blue-900',\n        },\n      }}\n    />\n  );\n};\n\nexport { toast };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

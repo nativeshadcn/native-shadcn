@@ -1,0 +1,17 @@
+{
+  "name": "card",
+  "type": "ui",
+  "description": "A flexible card container component",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/card.tsx",
+      "content": "import * as React from 'react';\nimport { View, Text } from 'react-native';\nimport { cn } from '@/lib/utils';\n\nconst Card = React.forwardRef<\n  React.ElementRef<typeof View>,\n  React.ComponentPropsWithoutRef<typeof View>\n>(({ className, ...props }, ref) => (\n  <View\n    ref={ref}\n    className={cn('rounded-lg border border-border bg-card shadow-sm', className)}\n    {...props}\n  />\n));\nCard.displayName = 'Card';\n\nconst CardHeader = React.forwardRef<\n  React.ElementRef<typeof View>,\n  React.ComponentPropsWithoutRef<typeof View>\n>(({ className, ...props }, ref) => (\n  <View ref={ref} className={cn('flex flex-col space-y-1.5 p-6', className)} {...props} />\n));\nCardHeader.displayName = 'CardHeader';\n\nconst CardTitle = React.forwardRef<\n  React.ElementRef<typeof Text>,\n  React.ComponentPropsWithoutRef<typeof Text>\n>(({ className, ...props }, ref) => (\n  <Text\n    ref={ref}\n    className={cn('text-2xl font-semibold leading-none tracking-tight', className)}\n    {...props}\n  />\n));\nCardTitle.displayName = 'CardTitle';\n\nconst CardDescription = React.forwardRef<\n  React.ElementRef<typeof Text>,\n  React.ComponentPropsWithoutRef<typeof Text>\n>(({ className, ...props }, ref) => (\n  <Text ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />\n));\nCardDescription.displayName = 'CardDescription';\n\nconst CardContent = React.forwardRef<\n  React.ElementRef<typeof View>,\n  React.ComponentPropsWithoutRef<typeof View>\n>(({ className, ...props }, ref) => (\n  <View ref={ref} className={cn('p-6 pt-0', className)} {...props} />\n));\nCardContent.displayName = 'CardContent';\n\nconst CardFooter = React.forwardRef<\n  React.ElementRef<typeof View>,\n  React.ComponentPropsWithoutRef<typeof View>\n>(({ className, ...props }, ref) => (\n  <View ref={ref} className={cn('flex flex-row items-center p-6 pt-0', className)} {...props} />\n));\nCardFooter.displayName = 'CardFooter';\n\nexport { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

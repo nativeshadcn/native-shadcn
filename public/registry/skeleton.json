@@ -1,0 +1,17 @@
+{
+  "name": "skeleton",
+  "type": "ui",
+  "description": "Loading placeholder skeleton",
+  "dependencies": [
+    "clsx"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/skeleton.tsx",
+      "content": "import * as React from 'react';\nimport { View, Animated } from 'react-native';\nimport { cn } from '@/lib/utils';\n\ninterface SkeletonProps extends React.ComponentPropsWithoutRef<typeof View> {}\n\nconst Skeleton = React.forwardRef<React.ElementRef<typeof View>, SkeletonProps>(\n  ({ className, ...props }, ref) => {\n    const opacity = React.useRef(new Animated.Value(0.5)).current;\n\n    React.useEffect(() => {\n      const animation = Animated.loop(\n        Animated.sequence([\n          Animated.timing(opacity, {\n            toValue: 1,\n            duration: 1000,\n            useNativeDriver: true,\n          }),\n          Animated.timing(opacity, {\n            toValue: 0.5,\n            duration: 1000,\n            useNativeDriver: true,\n          }),\n        ])\n      );\n      animation.start();\n      return () => animation.stop();\n    }, []);\n\n    return (\n      <Animated.View\n        ref={ref}\n        style={{ opacity }}\n        className={cn('rounded-md bg-muted', className)}\n        {...props}\n      />\n    );\n  }\n);\n\nSkeleton.displayName = 'Skeleton';\n\nexport { Skeleton };\n",
+      "type": "registry:ui"
+    }
+  ]
+}
