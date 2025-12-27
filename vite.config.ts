@@ -8,10 +8,6 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@templates": path.resolve(__dirname, "./src/registry"),
-      "react-native": "react-native-web",
     },
-  },
-  optimizeDeps: {
-    include: ["react-native-web"],
   },
 });
