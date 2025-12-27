@@ -1,0 +1,129 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`resolver > dependency resolution snapshots > should match complete dependency tree for dialog 1`] = `
+[
+  {
+    "dependencies": [
+      "@radix-ui/react-dialog",
+    ],
+    "name": "dialog",
+    "registryDependencies": [
+      "button",
+      "utils",
+    ],
+    "type": "registry:ui",
+  },
+  {
+    "dependencies": [
+      "class-variance-authority",
+    ],
+    "name": "button",
+    "registryDependencies": [
+      "utils",
+    ],
+    "type": "registry:ui",
+  },
+  {
+    "dependencies": [
+      "clsx",
+      "tailwind-merge",
+    ],
+    "name": "utils",
+    "type": "registry:lib",
+  },
+]
+`;
+
+exports[`resolver > dependency resolution snapshots > should match sorted dependency tree 1`] = `
+[
+  {
+    "dependencies": [
+      "clsx",
+      "tailwind-merge",
+    ],
+    "name": "utils",
+    "type": "registry:lib",
+  },
+  {
+    "dependencies": [
+      "class-variance-authority",
+    ],
+    "name": "button",
+    "registryDependencies": [
+      "utils",
+    ],
+    "type": "registry:ui",
+  },
+  {
+    "dependencies": [
+      "@radix-ui/react-dialog",
+    ],
+    "name": "dialog",
+    "registryDependencies": [
+      "button",
+      "utils",
+    ],
+    "type": "registry:ui",
+  },
+]
+`;
+
+exports[`resolver > resolveDependencies > should handle circular dependencies gracefully 1`] = `
+[
+  "button",
+  "utils",
+]
+`;
+
+exports[`resolver > resolveDependencies > should resolve component with nested dependencies 1`] = `
+[
+  "dialog",
+  "button",
+  "utils",
+]
+`;
+
+exports[`resolver > resolveDependencies > should resolve component with no dependencies 1`] = `
+[
+  "utils",
+]
+`;
+
+exports[`resolver > resolveDependencies > should resolve component with single dependency 1`] = `
+[
+  "button",
+  "utils",
+]
+`;
+
+exports[`resolver > resolveDependencies > should return empty array for non-existent component 1`] = `[]`;
+
+exports[`resolver > sortByDependencyOrder > should handle complex dependency tree 1`] = `
+[
+  "utils",
+  "button",
+  "dialog",
+]
+`;
+
+exports[`resolver > sortByDependencyOrder > should handle components with no dependencies 1`] = `
+[
+  "utils",
+]
+`;
+
+exports[`resolver > sortByDependencyOrder > should maintain order for independent components 1`] = `
+[
+  "utils",
+  "button",
+  "card",
+]
+`;
+
+exports[`resolver > sortByDependencyOrder > should sort components by dependency order 1`] = `
+[
+  "utils",
+  "button",
+  "dialog",
+]
+`;

@@ -3,7 +3,7 @@ import { View, Text, Animated, Pressable } from 'react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
-// Toast - Hook IS exposed (like shadcn/ui)
+// Toast - Hook IS exposed 
 type ToastType = {
   id: string;
   title?: string;
@@ -20,7 +20,7 @@ type ToastContextValue = {
 
 const ToastContext = React.createContext<ToastContextValue | undefined>(undefined);
 
-// Hook EXPORTED (like shadcn/ui does)
+// Hook EXPORTED 
 export function useToast() {
   const context = React.useContext(ToastContext);
   if (!context) throw new Error('useToast must be used within ToastProvider');

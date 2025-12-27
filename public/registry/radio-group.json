@@ -1,0 +1,19 @@
+{
+  "name": "radio-group",
+  "type": "registry:ui",
+  "description": "A radio button group component",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "ui/radio-group.tsx",
+      "content": "import * as React from 'react';\nimport { View, Pressable } from 'react-native';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\ntype RadioGroupContextValue = {\n  value?: string;\n  onValueChange?: (value: string) => void;\n};\n\nconst RadioGroupContext = React.createContext<RadioGroupContextValue | undefined>(undefined);\n\nfunction useRadioGroup() {\n  const context = React.useContext(RadioGroupContext);\n  if (!context) throw new Error('RadioGroup components must be used within <RadioGroup>');\n  return context;\n}\n\n// Root RadioGroup\nexport interface RadioGroupProps extends React.ComponentPropsWithoutRef<typeof View> {\n  value?: string;\n  onValueChange?: (value: string) => void;\n}\n\nconst RadioGroup = React.forwardRef<React.ElementRef<typeof View>, RadioGroupProps>(\n  ({ value, onValueChange, className, ...props }, ref) => {\n    return (\n      <RadioGroupContext.Provider value={{ value, onValueChange }}>\n        <View ref={ref} className={cn('gap-2', className)} {...props} />\n      </RadioGroupContext.Provider>\n    );\n  }\n);\nRadioGroup.displayName = 'RadioGroup';\n\n// RadioGroup Item\nconst radioGroupItemVariants = cva(\n  'h-5 w-5 rounded-full border-2 border-primary items-center justify-center',\n  {\n    variants: {\n      checked: {\n        true: 'bg-primary',\n        false: 'bg-background',\n      },\n    },\n    defaultVariants: { checked: false },\n  }\n);\n\nexport interface RadioGroupItemProps\n  extends React.ComponentPropsWithoutRef<typeof Pressable>,\n    VariantProps<typeof radioGroupItemVariants> {\n  value: string;\n}\n\nconst RadioGroupItem = React.forwardRef<React.ElementRef<typeof Pressable>, RadioGroupItemProps>(\n  ({ className, value: itemValue, ...props }, ref) => {\n    const { value, onValueChange } = useRadioGroup();\n    const isChecked = value === itemValue;\n\n    return (\n      <Pressable\n        ref={ref}\n        className={cn(radioGroupItemVariants({ checked: isChecked, className }))}\n        onPress={() => onValueChange?.(itemValue)}\n        role=\"radio\"\n        {...props}\n      >\n        {isChecked && <View className=\"h-2.5 w-2.5 rounded-full bg-primary-foreground\" />}\n      </Pressable>\n    );\n  }\n);\nRadioGroupItem.displayName = 'RadioGroupItem';\n\nexport { RadioGroup, RadioGroupItem };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

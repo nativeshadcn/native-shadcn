@@ -1,0 +1,100 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`validate-config > config validation snapshots > should match valid JavaScript config 1`] = `
+{
+  "errors": [],
+  "valid": true,
+}
+`;
+
+exports[`validate-config > config validation snapshots > should match valid TypeScript Expo config 1`] = `
+{
+  "errors": [],
+  "valid": true,
+}
+`;
+
+exports[`validate-config > normalizeAlias > should add ./ prefix to plain path 1`] = `"./components"`;
+
+exports[`validate-config > normalizeAlias > should handle nested paths 1`] = `"@/components/ui"`;
+
+exports[`validate-config > normalizeAlias > should normalize @/ prefix 1`] = `"@/components"`;
+
+exports[`validate-config > normalizeAlias > should normalize ~/ prefix 1`] = `"~/components"`;
+
+exports[`validate-config > normalizeAlias > should normalize relative path 1`] = `"./components"`;
+
+exports[`validate-config > normalizeAlias > should remove trailing slash 1`] = `"@/components"`;
+
+exports[`validate-config > validateConfig > should collect multiple errors 1`] = `
+{
+  "errors": [
+    "style must be "nativewind"",
+    "typescript must be a boolean",
+    "tailwind config is required",
+    "aliases are required",
+  ],
+  "valid": false,
+}
+`;
+
+exports[`validate-config > validateConfig > should reject config with invalid style 1`] = `
+{
+  "errors": [
+    "style must be "nativewind"",
+  ],
+  "valid": false,
+}
+`;
+
+exports[`validate-config > validateConfig > should reject config with missing alias fields 1`] = `
+{
+  "errors": [
+    "aliases.utils is required",
+  ],
+  "valid": false,
+}
+`;
+
+exports[`validate-config > validateConfig > should reject config without aliases 1`] = `
+{
+  "errors": [
+    "aliases are required",
+  ],
+  "valid": false,
+}
+`;
+
+exports[`validate-config > validateConfig > should reject config without style 1`] = `
+{
+  "errors": [
+    "style is required",
+  ],
+  "valid": false,
+}
+`;
+
+exports[`validate-config > validateConfig > should reject config without tailwind config 1`] = `
+{
+  "errors": [
+    "tailwind config is required",
+  ],
+  "valid": false,
+}
+`;
+
+exports[`validate-config > validateConfig > should reject config without typescript field 1`] = `
+{
+  "errors": [
+    "typescript must be a boolean",
+  ],
+  "valid": false,
+}
+`;
+
+exports[`validate-config > validateConfig > should validate correct config 1`] = `
+{
+  "errors": [],
+  "valid": true,
+}
+`;

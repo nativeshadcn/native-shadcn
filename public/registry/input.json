@@ -1,12 +1,12 @@
 {
   "name": "input",
-  "type": "ui",
-  "description": "A styled text input component",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A text input component with validation support",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/input.tsx",

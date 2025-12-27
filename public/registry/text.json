@@ -1,13 +1,14 @@
 {
   "name": "text",
-  "type": "ui",
-  "description": "Typography component with variants",
+  "type": "registry:ui",
+  "description": "A customizable text component with typography variants",
   "dependencies": [
-    "class-variance-authority",
-    "clsx"
+    "class-variance-authority"
   ],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/text.tsx",

@@ -1,13 +1,14 @@
 {
   "name": "badge",
-  "type": "ui",
-  "description": "A badge component for status and labels",
+  "type": "registry:ui",
+  "description": "A badge component for displaying status or labels",
   "dependencies": [
-    "class-variance-authority",
-    "clsx"
+    "class-variance-authority"
   ],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/badge.tsx",

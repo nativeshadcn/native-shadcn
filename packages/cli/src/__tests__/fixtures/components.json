@@ -1,0 +1,12 @@
+{
+  "style": "nativewind",
+  "typescript": true,
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "global.css"
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  }
+}

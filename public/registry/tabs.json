@@ -1,12 +1,12 @@
 {
   "name": "tabs",
-  "type": "ui",
-  "description": "A tabs navigation component",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A tabs component for organizing content",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/tabs.tsx",

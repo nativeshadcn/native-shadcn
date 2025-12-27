@@ -1,10 +1,9 @@
 {
   "name": "sonner",
-  "type": "ui",
-  "description": "Modern toast notification system",
+  "type": "registry:ui",
+  "description": "An opinionated toast component built with Sonner",
   "dependencies": [
-    "clsx",
-    "sonner-native"
+    "sonner"
   ],
   "devDependencies": [],
   "registryDependencies": [],

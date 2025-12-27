@@ -1,0 +1,48 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transform-import > transformImport > should not transform external package import 1`] = `"react-native"`;
+
+exports[`transform-import > transformImport > should not transform relative import outside aliases 1`] = `"../../../other/path"`;
+
+exports[`transform-import > transformImport > should transform component import with alias 1`] = `"@/components/ui/button"`;
+
+exports[`transform-import > transformImport > should transform lib import with alias 1`] = `"@/lib/utils"`;
+
+exports[`transform-import > transformImport > should transform nested component import 1`] = `"@/components/ui/forms/input"`;
+
+exports[`transform-import > updateImports > should handle mixed import styles 1`] = `
+"import * as React from 'react';
+import type { ViewProps } from 'react-native';
+import { cn } from '@/lib/utils';
+import { Button as Btn } from '@/components/ui/button';"
+`;
+
+exports[`transform-import > updateImports > should handle multiline imports 1`] = `
+"import {
+  Card,
+  CardHeader,
+  CardContent
+} from '@/components/ui/card';"
+`;
+
+exports[`transform-import > updateImports > should preserve external imports 1`] = `
+"import React from 'react';
+import { View, Text } from 'react-native';
+import { Button } from '@/components/ui/button';"
+`;
+
+exports[`transform-import > updateImports > should update all imports in component code 1`] = `
+"import React from 'react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import type { Config } from '@/lib/types';
+
+export function MyComponent() {
+  return <Button className={cn('btn')} />;
+}"
+`;
+
+exports[`transform-import > updateImports > should update imports with double quotes 1`] = `
+"import { Card } from '@/components/ui/card';
+import { formatDate } from '@/lib/utils';"
+`;

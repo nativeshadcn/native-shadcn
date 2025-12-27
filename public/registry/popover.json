@@ -1,12 +1,12 @@
 {
   "name": "popover",
-  "type": "ui",
-  "description": "A popover component",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A popover component for displaying floating content",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/popover.tsx",

@@ -1,13 +1,14 @@
 {
   "name": "toggle",
-  "type": "ui",
-  "description": "Toggle button component",
+  "type": "registry:ui",
+  "description": "A toggle button component",
   "dependencies": [
-    "class-variance-authority",
-    "clsx"
+    "class-variance-authority"
   ],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/toggle.tsx",

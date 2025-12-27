@@ -5,8 +5,8 @@ export default defineConfig({
   format: ['cjs'],
   target: 'node16',
   clean: true,
-  minify: false,
-  sourcemap: true,
+  minify: true,
+  sourcemap: false, // Disable source maps to reduce package size
   dts: true,
   shims: true,
 });

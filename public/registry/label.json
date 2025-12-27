@@ -1,12 +1,12 @@
 {
   "name": "label",
-  "type": "ui",
-  "description": "Form label component",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A label component for form inputs",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/label.tsx",

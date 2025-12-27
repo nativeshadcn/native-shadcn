@@ -1,13 +1,12 @@
 {
   "name": "sheet",
-  "type": "ui",
-  "description": "A bottom sheet component",
-  "dependencies": [
-    "clsx",
-    "@gorhom/bottom-sheet"
-  ],
+  "type": "registry:ui",
+  "description": "A sheet/drawer component that slides in from the edge",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/sheet.tsx",

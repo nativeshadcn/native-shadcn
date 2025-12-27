@@ -1,0 +1,22 @@
+# Source files
+src/
+__tests__/
+
+# Build artifacts
+*.map
+*.tsbuildinfo
+
+# Development files
+tsconfig.json
+tsup.config.ts
+vitest.config.ts
+
+# Tests
+*.test.ts
+*.test.js
+**/__tests__/**
+**/__snapshots__/**
+
+# CI/CD
+.github/
+.gitignore

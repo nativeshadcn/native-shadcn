@@ -1,0 +1,25 @@
+[
+  {
+    "name": "button",
+    "type": "registry:ui",
+    "description": "A button component",
+    "files": ["ui/button.tsx"],
+    "dependencies": ["class-variance-authority"],
+    "registryDependencies": ["utils"]
+  },
+  {
+    "name": "card",
+    "type": "registry:ui",
+    "description": "A card component",
+    "files": ["ui/card.tsx"],
+    "dependencies": [],
+    "registryDependencies": ["utils"]
+  },
+  {
+    "name": "utils",
+    "type": "registry:lib",
+    "description": "Utility functions",
+    "files": ["lib/utils.ts"],
+    "dependencies": ["clsx", "tailwind-merge"]
+  }
+]

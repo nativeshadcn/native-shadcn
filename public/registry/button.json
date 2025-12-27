@@ -1,13 +1,14 @@
 {
   "name": "button",
-  "type": "ui",
-  "description": "A customizable button component with variants",
+  "type": "registry:ui",
+  "description": "A customizable button component with multiple variants",
   "dependencies": [
-    "class-variance-authority",
-    "clsx"
+    "class-variance-authority"
   ],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/button.tsx",

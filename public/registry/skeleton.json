@@ -1,12 +1,12 @@
 {
   "name": "skeleton",
-  "type": "ui",
-  "description": "Loading placeholder skeleton",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A skeleton loading component",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/skeleton.tsx",

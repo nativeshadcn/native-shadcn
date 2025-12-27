@@ -1,12 +1,12 @@
 {
   "name": "accordion",
-  "type": "ui",
-  "description": "An expandable accordion component",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "An accordion component for collapsible content",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/accordion.tsx",

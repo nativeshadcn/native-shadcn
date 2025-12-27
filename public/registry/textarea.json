@@ -1,12 +1,12 @@
 {
   "name": "textarea",
-  "type": "ui",
-  "description": "Multi-line text input",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A multi-line text input component",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/textarea.tsx",

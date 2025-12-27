@@ -1,13 +1,14 @@
 {
   "name": "loader",
-  "type": "ui",
-  "description": "Animated loader with multiple variants (dots, spinner, pulse)",
+  "type": "registry:ui",
+  "description": "A loading spinner component",
   "dependencies": [
-    "class-variance-authority",
-    "clsx"
+    "class-variance-authority"
   ],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/loader.tsx",

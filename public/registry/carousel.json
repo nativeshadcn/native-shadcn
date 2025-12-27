@@ -1,12 +1,13 @@
 {
   "name": "carousel",
-  "type": "ui",
-  "description": "Flexible carousel/slider for images, cards, or custom content",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A carousel component for sliding content",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils",
+    "button"
+  ],
   "files": [
     {
       "path": "ui/carousel.tsx",

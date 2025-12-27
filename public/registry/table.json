@@ -1,12 +1,12 @@
 {
   "name": "table",
-  "type": "ui",
-  "description": "Responsive table component for displaying data",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A table component for displaying tabular data",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/table.tsx",

@@ -50,6 +50,8 @@ export async function init(options: InitOptions) {
   }
 
   let config: Config;
+  let configureTsconfig = true;
+  let createNativewindEnv = true;
 
   if (options.yes) {
     config = {
@@ -84,7 +86,22 @@ export async function init(options: InitOptions) {
         message: 'Configure the import alias for utils:',
         initial: '@/lib/utils',
       },
+      {
+        type: (prev, values) => values.typescript ? 'confirm' : null,
+        name: 'configureTsconfig',
+        message: 'Update tsconfig.json with path aliases?',
+        initial: true,
+      },
+      {
+        type: (prev, values) => values.typescript ? 'confirm' : null,
+        name: 'createNativewindEnv',
+        message: 'Create nativewind-env.d.ts for className TypeScript support?',
+        initial: true,
+      },
     ]);
+
+    configureTsconfig = answers.configureTsconfig ?? false;
+    createNativewindEnv = answers.createNativewindEnv ?? false;
 
     config = {
       style: 'nativewind',
@@ -100,15 +117,74 @@ export async function init(options: InitOptions) {
     };
   }
 
-  const spinner = ora('Setting up your project...').start();
+  const spinner = ora('Checking framework').start();
 
   try {
     // Create config file
+    spinner.text = 'Writing components.json';
     await createConfig(cwd, config);
-    spinner.succeed('Configuration created');
+    spinner.succeed('Writing components.json');
+
+    // Update tsconfig.json with path aliases (optional)
+    if (config.typescript && configureTsconfig) {
+      spinner.start('Updating tsconfig.json');
+      const tsconfigPath = path.join(cwd, 'tsconfig.json');
+      const tsconfigExists = await fs
+        .access(tsconfigPath)
+        .then(() => true)
+        .catch(() => false);
+
+      if (tsconfigExists) {
+        try {
+          const tsconfigContent = await fs.readFile(tsconfigPath, 'utf-8');
+          const tsconfig = JSON.parse(tsconfigContent);
+
+          // Ensure compilerOptions exists
+          if (!tsconfig.compilerOptions) {
+            tsconfig.compilerOptions = {};
+          }
+
+          // Add baseUrl if not present
+          if (!tsconfig.compilerOptions.baseUrl) {
+            tsconfig.compilerOptions.baseUrl = '.';
+          }
+
+          // Add or update paths
+          if (!tsconfig.compilerOptions.paths) {
+            tsconfig.compilerOptions.paths = {};
+          }
+
+          // Add path aliases based on config
+          const componentsAlias = config.aliases.components.replace(/^@\//, '');
+          const utilsPath = config.aliases.utils.replace(/^@\//, '');
+
+          tsconfig.compilerOptions.paths[`${config.aliases.components}/*`] = [`./${componentsAlias}/*`];
+          tsconfig.compilerOptions.paths[`@/lib/*`] = ['./lib/*'];
+
+          // Write back with proper formatting
+          await fs.writeFile(tsconfigPath, JSON.stringify(tsconfig, null, 2));
+          spinner.succeed('Updating tsconfig.json');
+        } catch (error) {
+          spinner.warn('Could not automatically update tsconfig.json');
+          logger.info('  Please add path aliases to your tsconfig.json manually');
+        }
+      } else {
+        spinner.warn('tsconfig.json not found');
+        logger.info('  Please add path aliases to your tsconfig.json manually');
+      }
+    }
+
+    // Create NativeWind type declaration file (optional)
+    if (config.typescript && createNativewindEnv) {
+      spinner.start('Writing nativewind-env.d.ts');
+      const nativewindEnvPath = path.join(cwd, 'nativewind-env.d.ts');
+      const nativewindEnvContent = `/// <reference types="nativewind/types" />\n`;
+      await fs.writeFile(nativewindEnvPath, nativewindEnvContent);
+      spinner.succeed('Writing nativewind-env.d.ts');
+    }
 
     // Install dependencies
-    spinner.start('Installing dependencies...');
+    spinner.start('Installing dependencies');
     const dependencies = [
       'nativewind',
       'tailwindcss',
@@ -129,10 +205,10 @@ export async function init(options: InitOptions) {
       await execa('npm', ['install', '-D', ...devDependencies], { cwd });
     }
 
-    spinner.succeed('Dependencies installed');
+    spinner.succeed('Installing dependencies');
 
     // Create tailwind config with dark mode support
-    spinner.start('Creating tailwind configuration...');
+    spinner.start('Writing tailwind.config.js');
     const tailwindConfig = `/** @type {import('tailwindcss').Config} */
 module.exports = {
   // NOTE: Update this to include the paths to all of your component files.
@@ -192,10 +268,10 @@ module.exports = {
 `;
 
     await fs.writeFile(path.join(cwd, 'tailwind.config.js'), tailwindConfig);
-    spinner.succeed('Tailwind configuration created');
+    spinner.succeed('Writing tailwind.config.js');
 
     // Create global CSS file with CSS variables
-    spinner.start('Creating global styles...');
+    spinner.start('Writing global.css');
     const globalCss = `@tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -249,10 +325,10 @@ module.exports = {
 `;
 
     await fs.writeFile(path.join(cwd, 'global.css'), globalCss);
-    spinner.succeed('Global styles created');
+    spinner.succeed('Writing global.css');
 
     // Create utils directory and cn function
-    spinner.start('Creating utility functions...');
+    spinner.start('Writing lib/utils');
     const utilsDir = path.join(cwd, 'lib');
     await fs.mkdir(utilsDir, { recursive: true });
 
@@ -265,14 +341,34 @@ export function cn(...inputs: ClassValue[]) {
 `;
 
     const utilsFile = config.typescript ? 'utils.ts' : 'utils.js';
-    await fs.writeFile(path.join(utilsDir, utilsFile), utilsContent);
-    spinner.succeed('Utility functions created');
+    const utilsFilePath = path.join(utilsDir, utilsFile);
+
+    // Import merge utils for smart utils handling
+    const { mergeUtilsFile, hasCnFunction } = await import('../utils/merge-utils');
+
+    const utilsExists = await fs.access(utilsFilePath).then(() => true).catch(() => false);
+
+    if (utilsExists) {
+      const hasCn = await hasCnFunction(utilsFilePath);
+      if (!hasCn) {
+        // Merge cn function into existing file
+        await mergeUtilsFile(utilsFilePath, utilsContent);
+        spinner.succeed('Writing lib/utils');
+      } else {
+        // cn already exists, skip
+        spinner.succeed('Writing lib/utils');
+      }
+    } else {
+      // Create new file
+      await fs.writeFile(utilsFilePath, utilsContent);
+      spinner.succeed('Writing lib/utils');
+    }
 
     // Create components directory
     await fs.mkdir(path.join(cwd, 'components', 'ui'), { recursive: true });
 
     // Configure babel.config.js
-    spinner.start('Configuring Babel...');
+    spinner.start('Writing babel.config.js');
     const babelConfigPath = path.join(cwd, 'babel.config.js');
     const babelConfigExists = await fs
       .access(babelConfigPath)
@@ -301,9 +397,9 @@ export function cn(...inputs: ClassValue[]) {
           }
 
           await fs.writeFile(babelConfigPath, babelContent);
-          spinner.succeed('Babel configured');
+          spinner.succeed('Writing babel.config.js');
         } else {
-          spinner.succeed('Babel already configured');
+          spinner.succeed('Writing babel.config.js');
         }
       } catch (error) {
         spinner.warn('Could not automatically configure babel.config.js');
@@ -320,11 +416,11 @@ export function cn(...inputs: ClassValue[]) {
 };
 `;
       await fs.writeFile(babelConfigPath, babelConfig);
-      spinner.succeed('Babel configuration created');
+      spinner.succeed('Writing babel.config.js');
     }
 
     // Auto-import global.css in root component
-    spinner.start('Configuring global styles import...');
+    spinner.start('Importing global styles');
     const possibleRootFiles = [
       'app/_layout.tsx',
       'app/_layout.js',
@@ -364,11 +460,11 @@ export function cn(...inputs: ClassValue[]) {
             }
 
             await fs.writeFile(filePath, content);
-            spinner.succeed(`Global styles imported in ${file}`);
+            spinner.succeed('Importing global styles');
             rootFileFound = true;
             break;
           } else {
-            spinner.succeed(`Global styles already imported in ${file}`);
+            spinner.succeed('Importing global styles');
             rootFileFound = true;
             break;
           }

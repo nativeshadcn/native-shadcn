@@ -23,7 +23,7 @@ A beautiful collection of re-usable components built with React Native and Nativ
 - 🔧 **Fully Customizable** - Built with class-variance-authority (CVA)
 - 📱 **Mobile-First** - Designed specifically for React Native
 - 📚 **Interactive Documentation** - Live previews and copy-paste examples
-- ⚡ **TypeScript First** - Full type safety and IntelliSense
+- ⚡ **TypeScript & JavaScript** - Full TypeScript support, or use plain JavaScript
 - 🎭 **Accessible** - Built with accessibility best practices
 - 🔄 **Always Up-to-Date** - Components stay in your repo, update on your terms
 
@@ -103,6 +103,8 @@ This will automatically:
 - ✅ Create and configure `tailwind.config.js` with theme tokens
 - ✅ Create `global.css` with CSS variables for light/dark mode
 - ✅ Configure or create `babel.config.js` with NativeWind preset
+- ✅ Update `tsconfig.json` with path aliases (`@/components`, `@/lib`) - **optional**
+- ✅ Create `nativewind-env.d.ts` for TypeScript className support - **optional**
 - ✅ Auto-import `global.css` in your root component (App.tsx or _layout.tsx)
 - ✅ Create `lib/utils.ts` with the `cn()` helper function
 - ✅ Set up `components/ui` directory structure
@@ -149,7 +151,7 @@ module.exports = {
         border: 'hsl(var(--border))',
         background: 'hsl(var(--background))',
         primary: { DEFAULT: 'hsl(var(--primary))', ... },
-        // ... all shadcn/ui tokens
+        // ... al tokens
       },
     },
   },
@@ -182,6 +184,28 @@ module.exports = {
   plugins: ['nativewind/babel'], // ✅ Added automatically
 };
 ```
+
+### tsconfig.json
+```json
+// Automatically updated with path aliases
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["./components/*"],
+      "@/lib/*": ["./lib/*"]
+    }
+  }
+}
+```
+
+### nativewind-env.d.ts
+```typescript
+/// <reference types="nativewind/types" />
+```
+This file enables TypeScript support for the `className` prop on React Native components.
 
 ## Manual Installation (Alternative)
 
@@ -287,19 +311,76 @@ Visit the documentation site for:
 
 ```
 native-shadcn/
-├── src/                  # Documentation site source
-│   ├── pages/            # Documentation pages
-│   └── components/       # Website components
+├── src/                     # Documentation site source
+│   ├── pages/               # Documentation pages
+│   └── components/          # Website components
 ├── packages/
-│   └── cli/              # CLI tool
+│   └── cli/                 # CLI tool
 │       ├── src/
-│       │   ├── commands/ # CLI commands
-│       │   └── templates/ # Component templates
+│       │   ├── commands/    # CLI commands (init, add, list)
+│       │   ├── registry/    # Registry management
+│       │   ├── utils/       # Utility functions
+│       │   └── __tests__/   # Test suite (21 files, 257 tests)
+│       │       ├── commands/     # Command tests
+│       │       ├── config/       # Config tests
+│       │       ├── fixtures/     # Test fixtures (6 scenarios)
+│       │       ├── registry/     # Registry tests
+│       │       └── utils/        # Utility tests
+│       ├── vitest.config.ts # Test configuration
 │       └── package.json
-├── index.html            # Documentation site entry
-├── vite.config.ts        # Vite configuration
-└── package.json          # Documentation site dependencies
+├── public/
+│   └── registry/            # Component registry (48 components)
+├── index.html               # Documentation site entry
+├── vite.config.ts           # Vite configuration
+└── package.json             # Documentation site dependencies
 ```
+
+## Testing
+
+Native ShadCN CLI has a comprehensive test suite to ensure reliability:
+
+```bash
+cd packages/cli
+
+# Run all tests
+npm test
+
+# Watch mode (development)
+npm run test:watch
+
+# Coverage report
+npm run test:coverage
+```
+
+**Test Suite:**
+- ✅ **21 test files** organized into commands, config, registry, utils, and fixtures
+- ✅ **257 tests** covering all CLI functionality
+- ✅ **10 snapshot files** for consistency validation
+- ✅ **6 fixture directories** simulating real project scenarios
+
+**Test Coverage:**
+- ✅ Command tests (init, add, diff)
+- ✅ Config management and validation
+- ✅ Registry API and dependency resolution
+- ✅ Schema validation with snapshots
+- ✅ Component template processing
+- ✅ Import transformations
+- ✅ Utils merging (preserves custom code)
+- ✅ Package manager detection (npm, yarn, pnpm, bun)
+- ✅ TypeScript project detection
+- ✅ Project type detection (Expo vs Bare RN)
+- ✅ Path resolution
+- ✅ Dependency handling
+- ✅ Output formatting
+- ✅ Logger functionality
+
+**Fixtures:**
+- `with-aliases/` - Project with path aliases configured
+- `without-aliases/` - Project without path aliases
+- `expo-project/` - Complete Expo project structure
+- `bare-rn-project/` - Bare React Native project
+- `typescript-project/` - TypeScript configuration
+- `javascript-project/` - JavaScript configuration
 
 ## FAQ
 
@@ -316,11 +397,13 @@ Native shadcn/ui follows the shadcn/ui philosophy - you copy the component code 
 Yes! The `init` command automatically:
 - ✅ Configures Tailwind with CSS variables
 - ✅ Sets up babel.config.js
+- ✅ Updates tsconfig.json with path aliases
+- ✅ Creates nativewind-env.d.ts for TypeScript support
 - ✅ Imports global.css in your root component
 - ✅ Creates the cn() utility function
 - ✅ Adds dark mode support
 
-everything is configured automatically with one command.
+Everything is configured automatically with one command.
 
 ### Can I use this with Expo?
 
@@ -347,7 +430,12 @@ All components will automatically use the dark mode colors defined in `global.cs
 
 ### Is TypeScript required?
 
-While the components are written in TypeScript, you can use them in JavaScript projects too. The CLI will ask if you want TypeScript during setup. TypeScript is recommended for the best developer experience.
+No! While components are written in TypeScript, the CLI automatically transforms them to JavaScript if you choose "no" during setup. The transformation:
+- Removes all type annotations, interfaces, and TypeScript syntax
+- Preserves JSX and all functionality
+- Generates clean `.jsx` files
+
+TypeScript is recommended for the best developer experience, but JavaScript is fully supported.
 
 ## Contributing
 
@@ -369,12 +457,17 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## Roadmap
 
+- [x] Comprehensive testing suite (257 tests) ✅
+- [x] Smart utils merging (preserves custom code) ✅
+- [x] Environment variable support for development ✅
+- [x] Complete fixture-based testing ✅
+- [x] Snapshot testing for schemas and templates ✅
 - [ ] More components (Date Picker, File Upload, etc.)
 - [ ] Dark mode examples
 - [ ] Animation presets
 - [ ] Storybook integration
-- [ ] Component testing utilities
 - [ ] VS Code snippets
+- [ ] GitHub Actions CI/CD
 
 ## License
 

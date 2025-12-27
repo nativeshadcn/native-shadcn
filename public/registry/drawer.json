@@ -1,12 +1,12 @@
 {
   "name": "drawer",
-  "type": "ui",
-  "description": "Side drawer for navigation",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A drawer component that slides in from the bottom",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/drawer.tsx",

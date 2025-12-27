@@ -1,0 +1,19 @@
+{
+  "name": "menu-item",
+  "type": "registry:ui",
+  "description": "A menu item component",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "ui/menu-item.tsx",
+      "content": "import * as React from 'react';\nimport { View, Text, Pressable } from 'react-native';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\nconst menuItemVariants = cva(\n  'flex-row items-center px-4 py-3 active:bg-accent transition-colors',\n  {\n    variants: {\n      variant: {\n        default: 'bg-background',\n        ghost: '',\n        card: 'bg-card rounded-lg border border-border',\n      },\n      hasBorder: {\n        true: 'border-b border-border',\n        false: '',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      hasBorder: true,\n    },\n  }\n);\n\nexport interface MenuItemProps\n  extends React.ComponentPropsWithoutRef<typeof Pressable>,\n    VariantProps<typeof menuItemVariants> {\n  children?: React.ReactNode;\n}\n\nconst MenuItem = React.forwardRef<React.ElementRef<typeof Pressable>, MenuItemProps>(\n  ({ className, variant, hasBorder, ...props }, ref) => (\n    <Pressable\n      ref={ref}\n      className={cn(menuItemVariants({ variant, hasBorder, className }))}\n      {...props}\n    />\n  )\n);\n\nMenuItem.displayName = 'MenuItem';\n\n// Menu Item Icon\nexport interface MenuItemIconProps extends React.ComponentPropsWithoutRef<typeof View> {\n  children: React.ReactNode;\n}\n\nconst MenuItemIcon = React.forwardRef<React.ElementRef<typeof View>, MenuItemIconProps>(\n  ({ className, children, ...props }, ref) => (\n    <View ref={ref} className={cn('mr-3', className)} {...props}>\n      {children}\n    </View>\n  )\n);\n\nMenuItemIcon.displayName = 'MenuItemIcon';\n\n// Menu Item Label\nexport interface MenuItemLabelProps extends React.ComponentPropsWithoutRef<typeof Text> {}\n\nconst MenuItemLabel = React.forwardRef<React.ElementRef<typeof Text>, MenuItemLabelProps>(\n  ({ className, ...props }, ref) => (\n    <Text\n      ref={ref}\n      className={cn('flex-1 text-base text-foreground', className)}\n      {...props}\n    />\n  )\n);\n\nMenuItemLabel.displayName = 'MenuItemLabel';\n\n// Menu Item Description\nexport interface MenuItemDescriptionProps extends React.ComponentPropsWithoutRef<typeof Text> {}\n\nconst MenuItemDescription = React.forwardRef<\n  React.ElementRef<typeof Text>,\n  MenuItemDescriptionProps\n>(({ className, ...props }, ref) => (\n  <Text\n    ref={ref}\n    className={cn('text-sm text-muted-foreground mt-0.5', className)}\n    {...props}\n  />\n));\n\nMenuItemDescription.displayName = 'MenuItemDescription';\n\n// Menu Item Content (for label + description combo)\nexport interface MenuItemContentProps extends React.ComponentPropsWithoutRef<typeof View> {}\n\nconst MenuItemContent = React.forwardRef<React.ElementRef<typeof View>, MenuItemContentProps>(\n  ({ className, ...props }, ref) => (\n    <View ref={ref} className={cn('flex-1', className)} {...props} />\n  )\n);\n\nMenuItemContent.displayName = 'MenuItemContent';\n\n// Menu Item Action (right side content)\nexport interface MenuItemActionProps extends React.ComponentPropsWithoutRef<typeof View> {}\n\nconst MenuItemAction = React.forwardRef<React.ElementRef<typeof View>, MenuItemActionProps>(\n  ({ className, ...props }, ref) => (\n    <View ref={ref} className={cn('ml-3', className)} {...props} />\n  )\n);\n\nMenuItemAction.displayName = 'MenuItemAction';\n\nexport {\n  MenuItem,\n  MenuItemIcon,\n  MenuItemLabel,\n  MenuItemDescription,\n  MenuItemContent,\n  MenuItemAction,\n};\n",
+      "type": "registry:ui"
+    }
+  ]
+}

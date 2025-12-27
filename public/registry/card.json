@@ -1,12 +1,12 @@
 {
   "name": "card",
-  "type": "ui",
-  "description": "A flexible card container component",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A flexible card component for displaying content",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/card.tsx",

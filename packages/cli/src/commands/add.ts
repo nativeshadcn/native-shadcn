@@ -12,6 +12,7 @@ import {
   resolveTree,
   getRegistryIndex,
 } from "../registry";
+import { mergeUtilsFile, hasCnFunction, getCnFunctionTemplate } from "../utils/merge-utils";
 
 interface AddOptions {
   all?: boolean;
@@ -83,7 +84,7 @@ export async function add(components: string[], options: AddOptions) {
   let spinner = ora("Adding components...").start();
 
   try {
-    // Fetch registry index once (shadcn/ui approach for better performance)
+    // Fetch registry index once
     spinner.text = "Fetching registry index...";
     const startIndex = Date.now();
     const index = await getRegistryIndex();
@@ -95,9 +96,10 @@ export async function add(components: string[], options: AddOptions) {
     const tree = await resolveTree(index, selectedComponents);
     const resolveTime = Date.now() - startResolve;
 
-    spinner.succeed(
-      `Registry: ${indexTime}ms | Resolve: ${resolveTime}ms | Components: ${tree.length}`
-    );
+    // spinner.succeed(
+    //   `Registry: ${indexTime}ms | Resolve: ${resolveTime}ms | Components: ${tree.length}`
+    // );
+    spinner.stop();
 
     // Collect all npm dependencies from the resolved tree
     const allDependencies = new Set<string>();
@@ -113,12 +115,12 @@ export async function add(components: string[], options: AddOptions) {
 
     // Install dependencies
     if (allDependencies.size > 0) {
-      spinner = ora("Installing dependencies...").start();
+      spinner = ora("Installing dependencies").start();
       await execa("npm", ["install", ...Array.from(allDependencies)], { cwd });
     }
 
     if (allDevDependencies.size > 0) {
-      spinner.text = "Installing dev dependencies...";
+      spinner.text = "Installing dev dependencies";
       await execa("npm", ["install", "-D", ...Array.from(allDevDependencies)], {
         cwd,
       });
@@ -154,12 +156,34 @@ export async function add(components: string[], options: AddOptions) {
       spinner.text = `Installing ${name}...`;
 
       for (const file of component.files) {
+        // Determine base directory: lib files go to root, UI files go to components
+        const isLibFile = file.path.startsWith('lib/') || component.type === 'registry:lib';
+        const baseDir = isLibFile ? cwd : path.join(cwd, "components");
+
         // Use file.path from registry schema
-        const filePath = path.join(cwd, "components", file.path);
+        const filePath = path.join(baseDir, file.path);
         const fileExists = await fs
           .access(filePath)
           .then(() => true)
           .catch(() => false);
+
+        // Special handling for lib/utils - check if cn function exists
+        if (name === 'utils' && file.path.includes('utils')) {
+          const hasCn = fileExists && await hasCnFunction(filePath);
+
+          if (hasCn) {
+            // cn function already exists, skip this file
+            continue;
+          }
+
+          if (fileExists && !hasCn) {
+            // File exists but no cn function, merge it
+            spinner.text = "Merging cn function into existing utils file...";
+            const cnTemplate = getCnFunctionTemplate(config.typescript);
+            await mergeUtilsFile(filePath, cnTemplate);
+            continue;
+          }
+        }
 
         if (fileExists && !options.overwrite) {
           spinner.stop();
@@ -185,24 +209,22 @@ export async function add(components: string[], options: AddOptions) {
           continue;
         }
 
+        // Transform TypeScript to JavaScript if needed
+        const { transformJsx } = await import('../utils/transform-jsx');
+        content = await transformJsx(content || "", config);
+
         // Adjust file extension based on TypeScript config
         const fileName = config.typescript
           ? file.path
           : file.path.replace(/\.tsx?$/, ".jsx");
 
-        const fullPath = path.join(cwd, "components", fileName);
+        const fullPath = path.join(baseDir, fileName);
         await fs.mkdir(path.dirname(fullPath), { recursive: true });
         await fs.writeFile(fullPath, content || "");
       }
     }
 
-    spinner.succeed("Added " + selectedComponents.length + " component(s)");
-    logger.break();
-    logger.success("✓ Components added successfully!");
-    logger.break();
-    logger.info("You can now import and use these components in your app:");
-    logger.info("  import { Button } from '@/components/ui/button';");
-    logger.break();
+    spinner.succeed("Done.");
   } catch (error) {
     spinner.fail("Failed to add components");
     logger.error(error instanceof Error ? error.message : "Unknown error");

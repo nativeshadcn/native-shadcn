@@ -13,7 +13,7 @@ export function Home() {
               Beautiful React Native components
             </h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              38+ beautifully designed components built with NativeWind (Tailwind CSS for React Native).
+              48 beautifully designed components built with NativeWind (Tailwind CSS for React Native).
               <br />
               Accessible. Customizable. Open Source.
             </p>

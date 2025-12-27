@@ -1,65 +1,121 @@
 const fs = require('fs');
 const path = require('path');
 
-// Paths - updated to match shadcn/ui structure
+// Paths - updated structure
 const TEMPLATES_DIR = path.join(__dirname, '../src/registry');
 const REGISTRY_DIR = path.join(__dirname, '../packages/cli/src/registry');
 const OUTPUT_DIR = path.join(__dirname, '../public/registry');
 
-// Read registry metadata from schema.ts (shadcn/ui structure)
-const registryPath = path.join(REGISTRY_DIR, 'schema.ts');
+// Read registry metadata from registry.ts
+const registryPath = path.join(REGISTRY_DIR, 'registry.ts');
 const registryContent = fs.readFileSync(registryPath, 'utf-8');
 
 // Extract all component metadata from REGISTRY object
 function getAllComponents() {
   const components = {};
 
-  // Match each component block like: button: { name: 'button', ... }
-  const componentRegex = /(\w+(?:-\w+)*)\s*:\s*\{([^}]+(?:\{[^}]*\}[^}]*)*)\}/gs;
-  const matches = [...registryContent.matchAll(componentRegex)];
+  // Match the entire REGISTRY object
+  const registryMatch = registryContent.match(/export const REGISTRY[^=]*=\s*\{([\s\S]+)\};?\s*$/m);
+  if (!registryMatch) {
+    console.error('❌ Could not find REGISTRY object in registry.ts');
+    return components;
+  }
 
-  for (const match of matches) {
-    const name = match[1];
-    if (name === 'ComponentInfo') continue;
+  const registryBody = registryMatch[1];
 
-    const block = match[2];
+  // Split by component entries - look for pattern: name: { or 'name': {
+  // More robust approach: split by top-level commas and parse each entry
+  const lines = registryBody.split('\n');
+  let currentComponent = null;
+  let currentBlock = '';
+  let braceDepth = 0;
 
-    // Extract fields
-    const getName = () => {
-      const m = block.match(/name\s*:\s*['"]([^'"]+)['"]/);
-      return m ? m[1] : name;
-    };
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
 
-    const getType = () => {
-      const m = block.match(/type\s*:\s*['"]([^'"]+)['"]/);
-      return m ? m[1] : 'ui';
-    };
+    // Skip comments
+    if (line.trim().startsWith('//')) continue;
 
-    const getDescription = () => {
-      const m = block.match(/description\s*:\s*['"]([^'"]+)['"]/);
-      return m ? m[1] : '';
-    };
+    // Check if this is a new component entry
+    const componentMatch = line.match(/^\s{2}(?:\/\/.*\n\s{2})?['"]?([\w-]+)['"]?\s*:\s*\{/);
+    if (componentMatch && braceDepth === 0) {
+      // Save previous component if exists
+      if (currentComponent && currentBlock) {
+        parseComponentBlock(components, currentComponent, currentBlock);
+      }
+      // Start new component
+      currentComponent = componentMatch[1];
+      currentBlock = '';
+      braceDepth = 1;
+      continue;
+    }
 
-    const getArray = (field) => {
-      const m = block.match(new RegExp(`${field}\\s*:\\s*\\[([^\\]]+)\\]`));
-      if (!m) return [];
-      return m[1].split(',')
-        .map(s => s.trim().replace(/['"]/g, ''))
-        .filter(Boolean);
-    };
+    // Track brace depth
+    if (currentComponent) {
+      const openBraces = (line.match(/\{/g) || []).length;
+      const closeBraces = (line.match(/\}/g) || []).length;
+      braceDepth += openBraces - closeBraces;
 
-    components[name] = {
-      name: getName(),
-      type: getType(),
-      description: getDescription(),
-      dependencies: getArray('dependencies'),
-      devDependencies: getArray('devDependencies'),
-      registryDependencies: getArray('registryDependencies'),
-      files: getArray('files'),
-    };
+      if (braceDepth > 0) {
+        currentBlock += line + '\n';
+      } else if (braceDepth === 0) {
+        // Component block ended
+        parseComponentBlock(components, currentComponent, currentBlock);
+        currentComponent = null;
+        currentBlock = '';
+      }
+    }
+  }
+
+  // Don't forget the last component
+  if (currentComponent && currentBlock) {
+    parseComponentBlock(components, currentComponent, currentBlock);
   }
 
   return components;
+}
+
+function parseComponentBlock(components, name, block) {
+  const getName = () => {
+    const m = block.match(/name\s*:\s*['"]([^'"]+)['"]/);
+    return m ? m[1] : name;
+  };
+
+  const getType = () => {
+    const m = block.match(/type\s*:\s*['"]([^'"]+)['"]/);
+    return m ? m[1] : 'registry:ui';
+  };
+
+  const getDescription = () => {
+    const m = block.match(/description\s*:\s*['"]([^'"]+)['"]/);
+    return m ? m[1] : '';
+  };
+
+  const getArray = (field) => {
+    const m = block.match(new RegExp(`${field}\\s*:\\s*\\[([^\\]]+)\\]`, 's'));
+    if (!m) return [];
+    return m[1].split(',')
+      .map(s => s.trim().replace(/['"]/g, ''))
+      .filter(Boolean);
+  };
+
+  components[name] = {
+    name: getName(),
+    type: getType(),
+    description: getDescription(),
+    dependencies: getArray('dependencies'),
+    devDependencies: getArray('devDependencies'),
+    registryDependencies: getArray('registryDependencies'),
+    files: getArray('files'),
+  };
+}
+
+// Unescape template literal escape sequences
+function unescapeTemplate(str) {
+  return str
+    .replace(/\\`/g, '`')
+    .replace(/\\\$/g, '$')
+    .replace(/\\\\/g, '\\');
 }
 
 // Read template content from template file
@@ -76,13 +132,13 @@ function readTemplateContent(name) {
   // Extract template string (export const xxxTemplate = `...`;)
   const singleLineMatch = content.match(/export const \w+Template = `([\s\S]*?)`;\s*$/m);
   if (singleLineMatch && singleLineMatch[1]) {
-    return singleLineMatch[1];
+    return unescapeTemplate(singleLineMatch[1]);
   }
 
   // Try multiline extraction
   const multilineMatch = content.match(/export const \w+Template = `([\s\S]*)`/);
   if (multilineMatch && multilineMatch[1]) {
-    return multilineMatch[1].replace(/`;\s*$/, '');
+    return unescapeTemplate(multilineMatch[1].replace(/`;\s*$/, ''));
   }
 
   console.warn(`⚠️  Could not extract template from ${name}.ts`);
@@ -163,7 +219,7 @@ function buildRegistry() {
   console.log(`\n📁 Output: ${OUTPUT_DIR}`);
   console.log(`\n🌐 Serve with: npm run dev`);
   console.log(`   Local: http://localhost:5173/registry/button.json`);
-  console.log(`   Production: https://your-docs-site.com/registry/button.json`);
+  console.log(`   Production: https://native-shadcn-ui.netlify.app/registry/button.json`);
 }
 
 buildRegistry();

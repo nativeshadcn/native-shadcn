@@ -1,12 +1,13 @@
 {
   "name": "command",
-  "type": "ui",
-  "description": "Command palette menu",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A command palette component",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils",
+    "dialog"
+  ],
   "files": [
     {
       "path": "ui/command.tsx",

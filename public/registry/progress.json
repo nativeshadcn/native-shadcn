@@ -1,16 +1,16 @@
 {
   "name": "progress",
-  "type": "ui",
-  "description": "Progress bar for loading states",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A progress indicator component",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/progress.tsx",
-      "content": "import * as React from 'react';\nimport { View } from 'react-native';\nimport { cn } from '@/lib/utils';\n\ninterface ProgressProps extends React.ComponentPropsWithoutRef<typeof View> {\n  value?: number;\n  max?: number;\n}\n\nconst Progress = React.forwardRef<React.ElementRef<typeof View>, ProgressProps>(\n  ({ className, value = 0, max = 100, ...props }, ref) => {\n    const percentage = Math.min(Math.max((value / max) * 100, 0), 100);\n\n    return (\n      <View\n        ref={ref}\n        className={cn('relative h-4 w-full overflow-hidden rounded-full bg-secondary', className)}\n        {...props}\n      >\n        <View\n          className=\"h-full bg-primary transition-all\"\n          style={{ width: \\`\\${percentage}%\\` }}\n        />\n      </View>\n    );\n  }\n);\n\nProgress.displayName = 'Progress';\n\nexport { Progress };\n",
+      "content": "import * as React from 'react';\nimport { View } from 'react-native';\nimport { cn } from '@/lib/utils';\n\ninterface ProgressProps extends React.ComponentPropsWithoutRef<typeof View> {\n  value?: number;\n  max?: number;\n}\n\nconst Progress = React.forwardRef<React.ElementRef<typeof View>, ProgressProps>(\n  ({ className, value = 0, max = 100, ...props }, ref) => {\n    const percentage = Math.min(Math.max((value / max) * 100, 0), 100);\n\n    return (\n      <View\n        ref={ref}\n        className={cn('relative h-4 w-full overflow-hidden rounded-full bg-secondary', className)}\n        {...props}\n      >\n        <View\n          className=\"h-full bg-primary transition-all\"\n          style={{ width: `${percentage}%` }}\n        />\n      </View>\n    );\n  }\n);\n\nProgress.displayName = 'Progress';\n\nexport { Progress };\n",
       "type": "registry:ui"
     }
   ]

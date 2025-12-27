@@ -1,12 +1,12 @@
 {
   "name": "switch",
-  "type": "ui",
+  "type": "registry:ui",
   "description": "A toggle switch component",
-  "dependencies": [
-    "clsx"
-  ],
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/switch.tsx",

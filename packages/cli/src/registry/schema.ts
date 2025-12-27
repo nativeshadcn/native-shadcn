@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-// Registry item types (matching shadcn/ui)
+// Registry item types
 export const registryItemTypeSchema = z.enum([
   "registry:lib",
   "registry:block",
@@ -33,7 +33,7 @@ export const registryItemCssVarsSchema = z.object({
   dark: z.record(z.string(), z.string()).optional(),
 })
 
-// Main registry item schema (matching shadcn/ui)
+// Main registry item schema
 export const registryItemSchema = z.object({
   name: z.string(),
   type: registryItemTypeSchema,
@@ -48,8 +48,21 @@ export const registryItemSchema = z.object({
   docs: z.string().optional(),
 })
 
+// Registry index item schema (index.json has files as strings, not objects)
+export const registryIndexItemSchema = z.object({
+  name: z.string(),
+  type: registryItemTypeSchema,
+  description: z.string().optional(),
+  dependencies: z.array(z.string()).optional(),
+  devDependencies: z.array(z.string()).optional(),
+  registryDependencies: z.array(z.string()).optional(),
+  files: z.array(z.string()).optional(), // Strings in index, not objects!
+  meta: z.record(z.string(), z.any()).optional(),
+  docs: z.string().optional(),
+})
+
 // Registry index schema
-export const registryIndexSchema = z.array(registryItemSchema)
+export const registryIndexSchema = z.array(registryIndexItemSchema)
 
 // Registry schema
 export const registrySchema = z.object({
@@ -59,6 +72,7 @@ export const registrySchema = z.object({
 
 // Infer TypeScript types from Zod schemas
 export type RegistryItem = z.infer<typeof registryItemSchema>
+export type RegistryIndexItem = z.infer<typeof registryIndexItemSchema>
 export type RegistryItemFile = z.infer<typeof registryItemFileSchema>
 export type RegistryItemType = z.infer<typeof registryItemTypeSchema>
 export type Registry = z.infer<typeof registrySchema>

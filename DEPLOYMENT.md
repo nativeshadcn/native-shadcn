@@ -200,7 +200,7 @@ When you make changes:
 
 ## Deploying Website to Vercel
 
-Deploy your documentation website to Vercel (like shadcn/ui does).
+Deploy your documentation website to Vercel
 
 ### Why Vercel?
 

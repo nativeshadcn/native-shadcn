@@ -1,12 +1,12 @@
 {
   "name": "dialog",
-  "type": "ui",
+  "type": "registry:ui",
   "description": "A modal dialog component",
-  "dependencies": [
-    "clsx"
-  ],
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/dialog.tsx",

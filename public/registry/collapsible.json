@@ -1,12 +1,12 @@
 {
   "name": "collapsible",
-  "type": "ui",
-  "description": "Collapsible content container",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A collapsible component for hiding/showing content",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/collapsible.tsx",

@@ -1,13 +1,14 @@
 {
   "name": "avatar",
-  "type": "ui",
+  "type": "registry:ui",
   "description": "A user avatar with fallback support",
   "dependencies": [
-    "class-variance-authority",
-    "clsx"
+    "class-variance-authority"
   ],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/avatar.tsx",

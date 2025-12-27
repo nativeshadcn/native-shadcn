@@ -1,13 +1,14 @@
 {
   "name": "alert",
-  "type": "ui",
-  "description": "Alert messages for user notifications",
+  "type": "registry:ui",
+  "description": "An alert component for displaying important messages",
   "dependencies": [
-    "class-variance-authority",
-    "clsx"
+    "class-variance-authority"
   ],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/alert.tsx",

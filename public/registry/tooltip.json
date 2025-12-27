@@ -1,12 +1,12 @@
 {
   "name": "tooltip",
-  "type": "ui",
-  "description": "A tooltip component",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A tooltip component for displaying contextual information",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "ui/tooltip.tsx",

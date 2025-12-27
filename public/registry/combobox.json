@@ -1,12 +1,15 @@
 {
   "name": "combobox",
-  "type": "ui",
-  "description": "Searchable autocomplete select",
-  "dependencies": [
-    "clsx"
-  ],
+  "type": "registry:ui",
+  "description": "A combobox component with autocomplete",
+  "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils",
+    "button",
+    "popover",
+    "command"
+  ],
   "files": [
     {
       "path": "ui/combobox.tsx",

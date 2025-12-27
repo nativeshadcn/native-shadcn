@@ -16,7 +16,7 @@ export function Installation() {
           <ul className="list-disc list-inside space-y-2 text-muted-foreground">
             <li>React Native 0.73+ or Expo SDK 50+</li>
             <li>Node.js 16+</li>
-            <li>TypeScript (recommended)</li>
+            <li>TypeScript (recommended) or JavaScript</li>
           </ul>
         </div>
 
@@ -26,6 +26,9 @@ export function Installation() {
             Run the following command to initialize Native ShadCN in your project:
           </p>
           <CodeBlock code="npx native-shadcn-cli init" language="bash" />
+          <p className="mt-4 text-sm text-muted-foreground">
+            💡 The CLI will ask if you want TypeScript or JavaScript. Components are automatically transformed to your choice.
+          </p>
         </div>
 
         <div>
@@ -38,6 +41,8 @@ export function Installation() {
             <li>Creates <code className="text-sm">components.json</code> configuration file</li>
             <li>Creates <code className="text-sm">tailwind.config.js</code> with theme tokens and CSS variables</li>
             <li>Creates <code className="text-sm">global.css</code> with light/dark mode support</li>
+            <li>Updates <code className="text-sm">tsconfig.json</code> with path aliases (@/components, @/lib) - <strong>optional</strong></li>
+            <li>Creates <code className="text-sm">nativewind-env.d.ts</code> for TypeScript className support - <strong>optional</strong></li>
             <li>Creates <code className="text-sm">lib/utils.ts</code> with the cn() helper function</li>
             <li>Creates <code className="text-sm">components/ui</code> directory structure</li>
             <li>Configures or creates <code className="text-sm">babel.config.js</code> with NativeWind preset</li>
@@ -46,9 +51,12 @@ export function Installation() {
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold tracking-tight mb-4">Optional: Configure path aliases</h2>
+          <h2 className="text-2xl font-bold tracking-tight mb-4">Path Aliases Configuration</h2>
           <p className="text-muted-foreground mb-4">
-            If you want to use path aliases like <code className="text-sm">@/components</code>, install and configure <code className="text-sm">babel-plugin-module-resolver</code>:
+            During init, you'll be asked if you want to configure path aliases in your <code className="text-sm">tsconfig.json</code>. If you choose yes, you can use <code className="text-sm">@/components</code> and <code className="text-sm">@/lib</code> imports.
+          </p>
+          <p className="text-muted-foreground mb-4">
+            <strong>Optional:</strong> If you need runtime path resolution (e.g., for Metro bundler), you can also install <code className="text-sm">babel-plugin-module-resolver</code>:
           </p>
           <CodeBlock code="npm install -D babel-plugin-module-resolver" language="bash" />
           <p className="mt-4 text-muted-foreground mb-4">

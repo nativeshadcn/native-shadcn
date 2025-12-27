@@ -1,7 +1,6 @@
 export const mapViewTemplate = `import * as React from 'react';
 import { View, Text } from 'react-native';
 import MapView, { Marker, Circle, PROVIDER_GOOGLE, Region } from 'react-native-maps';
-import { cn } from '@/lib/utils';
 
 export interface MapLocation {
   latitude: number;

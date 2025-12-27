@@ -7,20 +7,20 @@ import {
   registryIndexSchema,
   type RegistryItem,
   type RegistryIndex,
+  type RegistryIndexItem,
 } from "./schema";
 
 // Registry cache to prevent duplicate fetches
 const registryCache = new Map<string, Promise<any>>();
 
-/**
- * Get registry base URL
- */
-function getRegistryUrl(path: string = ""): string {
-  const baseUrl =
-    process.env.REGISTRY_URL || "https://native-shadcn-ui.netlify.app/registry";
+// Registry base URL - can be overridden with REGISTRY_URL env var
+const REGISTRY_URL = process.env.REGISTRY_URL ?? "https://native-shadcn-ui.netlify.app/registry";
 
-  // Return full URL if path is provided
-  return path ? `${baseUrl}/${path}` : baseUrl;
+/**
+ * Get registry URL with optional path
+ */
+export function getRegistryUrl(path: string = ""): string {
+  return path ? `${REGISTRY_URL}/${path}` : REGISTRY_URL;
 }
 
 /**
@@ -124,10 +124,16 @@ async function fetchRegistry(paths: string[]): Promise<any[]> {
  */
 export async function getRegistryIndex(): Promise<RegistryIndex> {
   try {
+    const url = getRegistryUrl("index.json");
+    // logger.info(`Fetching registry from: ${url}`);
     const [result] = await fetchRegistry(["index.json"]);
     return registryIndexSchema.parse(result);
   } catch (error) {
     logger.error("Failed to fetch registry index");
+    logger.error(`Registry URL: ${getRegistryUrl()}`);
+    if (error instanceof Error) {
+      logger.error(`Error details: ${error.message}`);
+    }
     throw error;
   }
 }
@@ -148,14 +154,14 @@ export async function getRegistryItem(name: string): Promise<RegistryItem> {
 }
 
 /**
- * Resolve component dependency tree (matches shadcn/ui approach)
+ * Resolve component dependency tree
  * Searches in-memory index for faster resolution
  */
 export async function resolveTree(
   index: RegistryIndex,
   names: string[]
-): Promise<RegistryItem[]> {
-  const tree: RegistryItem[] = [];
+): Promise<RegistryIndexItem[]> {
+  const tree: RegistryIndexItem[] = [];
 
   for (const name of names) {
     // Find entry in the index
@@ -195,9 +201,9 @@ export async function getComponent(
 }
 
 /**
- * Helper: Get all components
+ * Helper: Get all components (returns index items)
  */
-export async function getAllComponents(): Promise<RegistryItem[]> {
+export async function getAllComponents(): Promise<RegistryIndexItem[]> {
   try {
     return await getRegistryIndex();
   } catch {

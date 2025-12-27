@@ -1,0 +1,64 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`package-info > getDependencyVersion > should get version from dependencies 1`] = `"^18.2.0"`;
+
+exports[`package-info > getDependencyVersion > should get version from devDependencies 1`] = `"^5.1.0"`;
+
+exports[`package-info > getDependencyVersion > should prefer dependencies over devDependencies 1`] = `"^5.0.0"`;
+
+exports[`package-info > getDependencyVersion > should return null for missing dependency 1`] = `null`;
+
+exports[`package-info > getUILibraries > should detect NativeWind 1`] = `
+[
+  "nativewind",
+  "tailwindcss",
+]
+`;
+
+exports[`package-info > getUILibraries > should detect multiple UI libraries 1`] = `
+[
+  "nativewind",
+  "tailwindcss",
+]
+`;
+
+exports[`package-info > getUILibraries > should return empty array when no UI libraries found 1`] = `[]`;
+
+exports[`package-info > hasDependency > should find dependency in dependencies 1`] = `true`;
+
+exports[`package-info > hasDependency > should find dependency in devDependencies 1`] = `true`;
+
+exports[`package-info > hasDependency > should handle package with no dependencies 1`] = `false`;
+
+exports[`package-info > hasDependency > should return false for missing dependency 1`] = `false`;
+
+exports[`package-info > isExpoProject > should detect Expo project 1`] = `true`;
+
+exports[`package-info > isExpoProject > should return false for non-Expo project 1`] = `false`;
+
+exports[`package-info > isReactNativeProject > should detect Expo as React Native project 1`] = `true`;
+
+exports[`package-info > isReactNativeProject > should detect React Native project 1`] = `true`;
+
+exports[`package-info > isReactNativeProject > should return false for non-React Native project 1`] = `false`;
+
+exports[`package-info > package info snapshots > should match complete Expo project info 1`] = `
+{
+  "hasTypeScript": true,
+  "isExpo": true,
+  "isReactNative": true,
+  "uiLibraries": [
+    "nativewind",
+    "tailwindcss",
+  ],
+}
+`;
+
+exports[`package-info > package info snapshots > should match complete bare React Native project info 1`] = `
+{
+  "hasTypeScript": false,
+  "isExpo": false,
+  "isReactNative": true,
+  "uiLibraries": [],
+}
+`;
