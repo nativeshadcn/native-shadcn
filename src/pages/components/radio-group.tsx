@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { radioGroupTemplate } from '@templates/radio-group'
+import radiogroupSource from '@templates/radio-group?raw'
 
 function RadioGroupPreview() {
   const [selectedPlan, setSelectedPlan] = useState('free')
@@ -77,7 +77,7 @@ const plans = [
 
       <InstallationSteps
         cli="npx native-shadcn add radio-group"
-        manual={radioGroupTemplate}
+        manual={radiogroupSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

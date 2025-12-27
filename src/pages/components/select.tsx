@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { selectTemplate } from '@templates/select'
+import selectSource from '@templates/select?raw'
 
 export function SelectDoc() {
   return (
@@ -33,7 +33,7 @@ export function SelectDoc() {
 
       <InstallationSteps
         cli="npx native-shadcn add select"
-        manual={selectTemplate}
+        manual={selectSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

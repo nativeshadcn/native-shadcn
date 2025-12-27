@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { progressTemplate } from '@templates/progress'
+import progressSource from '@templates/progress?raw'
 
 function ProgressPreview() {
   const [progress, setProgress] = useState(0)
@@ -79,7 +79,7 @@ useEffect(() => {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add progress"
-        manual={progressTemplate}
+        manual={progressSource}
         dependencies={['clsx']}
       />
 

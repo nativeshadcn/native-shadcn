@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { alertDialogTemplate } from '@templates/alert-dialog'
+import alertdialogSource from '@templates/alert-dialog?raw'
 
 function AlertDialogPreview() {
   const [isOpen, setIsOpen] = useState(false)
@@ -113,7 +113,7 @@ const handleDelete = () => {
 
       <InstallationSteps
         cli="npx native-shadcn-cli add alert-dialog"
-        manual={alertDialogTemplate}
+        manual={alertdialogSource}
         dependencies={['clsx']}
       />
 

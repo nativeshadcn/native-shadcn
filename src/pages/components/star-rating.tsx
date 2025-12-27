@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { starRatingTemplate } from '@templates/star-rating'
+import starratingSource from '@templates/star-rating?raw'
 
 function StarRatingPreview() {
   const [rating, setRating] = useState(3)
@@ -64,7 +64,7 @@ const [rating, setRating] = useState(3);
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add star-rating"
-        manual={starRatingTemplate}
+        manual={starratingSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

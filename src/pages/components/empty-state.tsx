@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { emptyStateTemplate } from '@templates/empty-state'
+import emptystateSource from '@templates/empty-state?raw'
 
 function EmptyStatePreview() {
   return (
@@ -59,7 +59,7 @@ import { View } from 'react-native';
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add empty-state"
-        manual={emptyStateTemplate}
+        manual={emptystateSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

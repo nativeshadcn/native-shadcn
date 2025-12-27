@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { tooltipTemplate } from '@templates/tooltip'
+import tooltipSource from '@templates/tooltip?raw'
 
 function TooltipPreview() {
   const [showTooltip, setShowTooltip] = useState(false)
@@ -58,7 +58,7 @@ import { Button } from '@/components/ui/button';
 
       <InstallationSteps
         cli="npx native-shadcn-cli add tooltip"
-        manual={tooltipTemplate}
+        manual={tooltipSource}
         dependencies={['clsx']}
       />
 

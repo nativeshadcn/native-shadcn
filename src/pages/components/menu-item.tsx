@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { menuItemTemplate } from '@templates/menu-item'
+import menuitemSource from '@templates/menu-item?raw'
 
 function MenuItemPreview() {
   const [selected, setSelected] = useState('profile')
@@ -90,7 +90,7 @@ import { View } from 'react-native';
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add menu-item"
-        manual={menuItemTemplate}
+        manual={menuitemSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

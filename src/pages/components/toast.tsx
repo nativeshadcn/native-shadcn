@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { toastTemplate } from '@templates/toast'
+import toastSource from '@templates/toast?raw'
 
 function ToastPreview() {
   const [showToast, setShowToast] = useState(false)
@@ -104,7 +104,7 @@ const showToastMessage = (type) => {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add toast"
-        manual={toastTemplate}
+        manual={toastSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

@@ -120,29 +120,39 @@ function unescapeTemplate(str) {
 
 // Read template content from template file
 function readTemplateContent(name) {
-  const templatePath = path.join(TEMPLATES_DIR, `${name}.ts`);
+  // Try .tsx first, then .ts
+  const extensions = ['.tsx', '.ts'];
+  let templatePath = null;
+  let content = '';
 
-  if (!fs.existsSync(templatePath)) {
-    console.warn(`⚠️  Template file not found: ${name}.ts`);
+  for (const ext of extensions) {
+    const testPath = path.join(TEMPLATES_DIR, `${name}${ext}`);
+    if (fs.existsSync(testPath)) {
+      templatePath = testPath;
+      content = fs.readFileSync(templatePath, 'utf-8');
+      break;
+    }
+  }
+
+  if (!templatePath) {
+    console.warn(`⚠️  Template file not found: ${name}.ts or ${name}.tsx`);
     return '';
   }
 
-  const content = fs.readFileSync(templatePath, 'utf-8');
-
-  // Extract template string (export const xxxTemplate = `...`;)
+  // First, try to extract old-style template string for backwards compatibility
   const singleLineMatch = content.match(/export const \w+Template = `([\s\S]*?)`;\s*$/m);
   if (singleLineMatch && singleLineMatch[1]) {
     return unescapeTemplate(singleLineMatch[1]);
   }
 
-  // Try multiline extraction
   const multilineMatch = content.match(/export const \w+Template = `([\s\S]*)`/);
   if (multilineMatch && multilineMatch[1]) {
     return unescapeTemplate(multilineMatch[1].replace(/`;\s*$/, ''));
   }
 
-  console.warn(`⚠️  Could not extract template from ${name}.ts`);
-  return '';
+  // New approach: Use the entire file content as the template
+  // This works for actual component files (not template strings)
+  return content;
 }
 
 // Build registry

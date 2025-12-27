@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { dropdownMenuTemplate } from '@templates/dropdown-menu'
+import dropdownmenuSource from '@templates/dropdown-menu?raw'
 
 function DropdownMenuPreview() {
   const [isOpen, setIsOpen] = useState(false)
@@ -116,7 +116,7 @@ const handleSelect = (item) => {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add dropdown-menu"
-        manual={dropdownMenuTemplate}
+        manual={dropdownmenuSource}
         dependencies={['clsx']}
       />
 

@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { loaderTemplate } from '@templates/loader'
+import loaderSource from '@templates/loader?raw'
 
 function LoaderPreview() {
   return (
@@ -42,7 +42,7 @@ export function LoaderDoc() {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add loader"
-        manual={loaderTemplate}
+        manual={loaderSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

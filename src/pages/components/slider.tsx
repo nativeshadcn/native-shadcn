@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { sliderTemplate } from '@templates/slider'
+import sliderSource from '@templates/slider?raw'
 
 function SliderPreview() {
   const [volume, setVolume] = useState(60)
@@ -97,7 +97,7 @@ const [brightness, setBrightness] = useState(30);
 
       <InstallationSteps
         cli="npx native-shadcn add slider"
-        manual={sliderTemplate}
+        manual={sliderSource}
         dependencies={['clsx']}
       />
 

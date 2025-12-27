@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { textareaTemplate } from '@templates/textarea'
+import textareaSource from '@templates/textarea?raw'
 
 export function TextareaDoc() {
   return (
@@ -33,7 +33,7 @@ export function TextareaDoc() {
 
       <InstallationSteps
         cli="npx native-shadcn add textarea"
-        manual={textareaTemplate}
+        manual={textareaSource}
         dependencies={['clsx']}
       />
 

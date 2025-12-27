@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { avatarTemplate } from '@templates/avatar'
+import avatarSource from '@templates/avatar?raw'
 
 export function AvatarDoc() {
   return (
@@ -37,7 +37,7 @@ export function AvatarDoc() {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add avatar"
-        manual={avatarTemplate}
+        manual={avatarSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

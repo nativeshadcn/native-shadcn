@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { drawerTemplate } from '@templates/drawer'
+import drawerSource from '@templates/drawer?raw'
 
 function DrawerPreview() {
   const [isOpen, setIsOpen] = useState(false)
@@ -165,7 +165,7 @@ const menuItems = [
 
       <InstallationSteps
         cli="npx native-shadcn-cli add drawer"
-        manual={drawerTemplate}
+        manual={drawerSource}
         dependencies={['clsx']}
       />
 

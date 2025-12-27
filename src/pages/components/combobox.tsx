@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { comboboxTemplate } from '@templates/combobox'
+import comboboxSource from '@templates/combobox?raw'
 
 function ComboboxPreview() {
   const [search, setSearch] = useState('')
@@ -115,7 +115,7 @@ const handleSelect = (value, label) => {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add combobox"
-        manual={comboboxTemplate}
+        manual={comboboxSource}
         dependencies={['clsx']}
       />
 

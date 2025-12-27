@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { sheetTemplate } from '@templates/sheet'
+import sheetSource from '@templates/sheet?raw'
 
 function SheetPreview() {
   const [isOpen, setIsOpen] = useState(false)
@@ -172,7 +172,7 @@ const [isOpen, setIsOpen] = useState(false);
 
       <InstallationSteps
         cli="npx native-shadcn-cli add sheet"
-        manual={sheetTemplate}
+        manual={sheetSource}
         dependencies={['clsx']}
       />
 

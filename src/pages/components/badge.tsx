@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { badgeTemplate } from '@templates/badge'
+import badgeSource from '@templates/badge?raw'
 
 export function BadgeDoc() {
   return (
@@ -80,7 +80,7 @@ export function BadgeDoc() {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add badge"
-        manual={badgeTemplate}
+        manual={badgeSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

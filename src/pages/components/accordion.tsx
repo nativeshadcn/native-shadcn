@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { accordionTemplate } from '@templates/accordion'
+import accordionSource from '@templates/accordion?raw'
 
 function AccordionPreview() {
   const [openItems, setOpenItems] = useState<string[]>(['item-1'])
@@ -118,7 +118,7 @@ const items = [
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add accordion"
-        manual={accordionTemplate}
+        manual={accordionSource}
         dependencies={['clsx']}
       />
 

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { selectionCardTemplate } from '@templates/selection-card'
+import selectioncardSource from '@templates/selection-card?raw'
 
 function SelectionCardPreview() {
   const [selected, setSelected] = useState('starter')
@@ -92,7 +92,7 @@ const [selected, setSelected] = useState('starter');
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add selection-card"
-        manual={selectionCardTemplate}
+        manual={selectioncardSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

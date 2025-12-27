@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { skeletonTemplate } from '@templates/skeleton'
+import skeletonSource from '@templates/skeleton?raw'
 
 export function SkeletonDoc() {
   return (
@@ -44,7 +44,7 @@ export function SkeletonDoc() {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add skeleton"
-        manual={skeletonTemplate}
+        manual={skeletonSource}
         dependencies={['clsx']}
       />
 

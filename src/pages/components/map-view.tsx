@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { mapViewTemplate } from '@templates/map-view'
+import mapviewSource from '@templates/map-view?raw'
 
 function MapViewPreview() {
   return (
@@ -57,7 +57,7 @@ const userLocation = { latitude: 6.9271, longitude: 79.8612 };
 
       <InstallationSteps
         cli="npx native-shadcn-ui add map-view"
-        manual={mapViewTemplate}
+        manual={mapviewSource}
         dependencies={['react-native-maps', 'clsx']}
       />
 

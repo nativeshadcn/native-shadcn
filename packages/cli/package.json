@@ -1,6 +1,6 @@
 {
   "name": "native-shadcn-ui",
-  "version": "0.1.0",
+  "version": "0.1.3-beta",
   "description": "CLI for adding Native ShadCN components to your React Native project",
   "main": "dist/index.js",
   "bin": {

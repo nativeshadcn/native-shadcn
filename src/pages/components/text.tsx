@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { textTemplate } from '@templates/text'
+import textSource from '@templates/text?raw'
 
 export function TextDoc() {
   return (
@@ -86,7 +86,7 @@ export function TextDoc() {
 
       <InstallationSteps
         cli="npx native-shadcn add text"
-        manual={textTemplate}
+        manual={textSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

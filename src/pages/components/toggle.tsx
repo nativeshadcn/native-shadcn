@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { toggleTemplate } from '@templates/toggle'
+import toggleSource from '@templates/toggle?raw'
 
 function TogglePreview() {
   const [boldPressed, setBoldPressed] = useState(false)
@@ -186,7 +186,7 @@ const [underlinePressed, setUnderlinePressed] = useState(true);
 
       <InstallationSteps
         cli="npx native-shadcn add toggle"
-        manual={toggleTemplate}
+        manual={toggleSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

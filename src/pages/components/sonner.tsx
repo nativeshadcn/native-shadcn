@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
-import { sonnerTemplate } from '@templates/sonner'
+import sonnerSource from '@templates/sonner?raw'
 
 function SonnerPreview() {
   const [toasts, setToasts] = useState<Array<{ id: number; message: string; description?: string; type: string }>>([])
@@ -209,7 +209,7 @@ export default function RootLayout() {
 
       <InstallationSteps
         cli="npx native-shadcn add sonner"
-        manual={sonnerTemplate}
+        manual={sonnerSource}
         dependencies={['sonner-native']}
       />
 

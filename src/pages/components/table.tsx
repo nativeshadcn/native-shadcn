@@ -1,6 +1,8 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
-import { tableTemplate } from '@templates/table'
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@templates/table'
+import tableSource from '@templates/table?raw'
+import { View } from 'react-native'
 
 // Functional table preview
 function TablePreview() {
@@ -211,7 +213,7 @@ export function InvoiceTable() {
 
       <InstallationSteps
         cli="npx native-shadcn add table"
-        manual={tableTemplate}
+        manual={tableSource}
         dependencies={['clsx']}
       />
 

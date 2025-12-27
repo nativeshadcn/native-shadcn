@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { cardTemplate } from '@templates/card'
+import cardSource from '@templates/card?raw'
 
 function CardPreview() {
   return (
@@ -73,7 +73,7 @@ import { Button } from '@/components/ui/button';
 
       <InstallationSteps
         cli="npx native-shadcn add card"
-        manual={cardTemplate}
+        manual={cardSource}
         dependencies={['clsx']}
       />
 

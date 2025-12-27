@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { checkboxTemplate } from '@templates/checkbox'
+import checkboxSource from '@templates/checkbox?raw'
 
 export function CheckboxDoc() {
   return (
@@ -32,7 +32,7 @@ export function CheckboxDoc() {
 
       <InstallationSteps
         cli="npx native-shadcn add checkbox"
-        manual={checkboxTemplate}
+        manual={checkboxSource}
         dependencies={['clsx']}
       />
 

@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { switchTemplate } from '@templates/switch'
+import switchSource from '@templates/switch?raw'
 
 export function SwitchDoc() {
   return (
@@ -32,7 +32,7 @@ export function SwitchDoc() {
 
       <InstallationSteps
         cli="npx native-shadcn add switch"
-        manual={switchTemplate}
+        manual={switchSource}
         dependencies={['clsx']}
       />
 

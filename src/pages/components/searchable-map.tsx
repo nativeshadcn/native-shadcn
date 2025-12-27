@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { searchableMapTemplate } from '@templates/searchable-map'
+import searchablemapSource from '@templates/searchable-map?raw'
 
 function SearchableMapPreview() {
   return (
@@ -75,7 +75,7 @@ const sportsCenters = [
 
       <InstallationSteps
         cli="npx native-shadcn-ui add searchable-map map-view sheet"
-        manual={searchableMapTemplate}
+        manual={searchablemapSource}
         dependencies={['react-native-maps', 'clsx']}
       />
 

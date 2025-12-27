@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { inputTemplate } from '@templates/input'
+import inputSource from '@templates/input?raw'
 
 export function InputDoc() {
   return (
@@ -31,7 +31,7 @@ export function InputDoc() {
 
       <InstallationSteps
         cli="npx native-shadcn add input"
-        manual={inputTemplate}
+        manual={inputSource}
         dependencies={['clsx']}
       />
 

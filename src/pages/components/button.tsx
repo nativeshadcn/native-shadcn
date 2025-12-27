@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { buttonTemplate } from '@templates/button'
+import buttonSource from '@templates/button?raw'
 
 // Mock preview components (these would render on web)
 function ButtonPreview() {
@@ -36,7 +36,7 @@ export function ButtonDoc() {
 
       <InstallationSteps
         cli="npx native-shadcn add button"
-        manual={buttonTemplate}
+        manual={buttonSource}
         dependencies={['class-variance-authority', 'clsx', 'tailwind-merge']}
       />
 

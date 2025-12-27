@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { tabsTemplate } from '@templates/tabs'
+import tabsSource from '@templates/tabs?raw'
 
 function TabsPreview() {
   const [activeTab, setActiveTab] = useState('account')
@@ -77,7 +77,7 @@ const tabs = [
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add tabs"
-        manual={tabsTemplate}
+        manual={tabsSource}
         dependencies={['clsx']}
       />
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
-import { hoverCardTemplate } from '@templates/hover-card'
+import hovercardSource from '@templates/hover-card?raw'
 
 // Functional hover card preview
 function HoverCardPreview() {
@@ -114,7 +114,7 @@ export function HoverCardExample() {
 
       <InstallationSteps
         cli="npx native-shadcn add hover-card"
-        manual={hoverCardTemplate}
+        manual={hovercardSource}
         dependencies={['clsx']}
       />
 

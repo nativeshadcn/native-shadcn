@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { commandTemplate } from '@templates/command'
+import commandSource from '@templates/command?raw'
 
 function CommandPreview() {
   const [search, setSearch] = useState('')
@@ -112,7 +112,7 @@ const filtered = items.filter(item =>
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add command"
-        manual={commandTemplate}
+        manual={commandSource}
         dependencies={['clsx']}
       />
 

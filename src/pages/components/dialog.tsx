@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { dialogTemplate } from '@templates/dialog'
+import dialogSource from '@templates/dialog?raw'
 
 function DialogPreview() {
   const [isOpen, setIsOpen] = useState(false)
@@ -164,7 +164,7 @@ const [isOpen, setIsOpen] = useState(false);
 
       <InstallationSteps
         cli="npx native-shadcn-cli add dialog"
-        manual={dialogTemplate}
+        manual={dialogSource}
         dependencies={['clsx']}
       />
 

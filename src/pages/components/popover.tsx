@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { popoverTemplate } from '@templates/popover'
+import popoverSource from '@templates/popover?raw'
 
 function PopoverPreview() {
   const [isOpen, setIsOpen] = useState(false)
@@ -104,7 +104,7 @@ const [isOpen, setIsOpen] = useState(false);
 
       <InstallationSteps
         cli="npx native-shadcn-cli add popover"
-        manual={popoverTemplate}
+        manual={popoverSource}
         dependencies={['clsx']}
       />
 

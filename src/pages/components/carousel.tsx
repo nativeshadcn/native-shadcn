@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { carouselTemplate } from '@templates/carousel'
+import carouselSource from '@templates/carousel?raw'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 function CarouselPreview() {
@@ -119,7 +119,7 @@ import { View, Text } from 'react-native';
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add carousel"
-        manual={carouselTemplate}
+        manual={carouselSource}
         dependencies={['clsx']}
       />
 

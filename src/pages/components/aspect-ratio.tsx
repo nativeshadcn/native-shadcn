@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { aspectRatioTemplate } from '@templates/aspect-ratio'
+import aspectratioSource from '@templates/aspect-ratio?raw'
 
 export function AspectRatioDoc() {
   return (
@@ -36,7 +36,7 @@ import { Image } from 'react-native';
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add aspect-ratio"
-        manual={aspectRatioTemplate}
+        manual={aspectratioSource}
         dependencies={['clsx']}
       />
 

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { calendarTemplate } from '@templates/calendar'
+import calendarSource from '@templates/calendar?raw'
 
 function CalendarPreview() {
   const [currentMonth, setCurrentMonth] = useState(0) // January
@@ -107,7 +107,7 @@ const [selectedDate, setSelectedDate] = useState(15);
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add calendar"
-        manual={calendarTemplate}
+        manual={calendarSource}
         dependencies={['clsx']}
       />
 

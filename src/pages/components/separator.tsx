@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { separatorTemplate } from '@templates/separator'
+import separatorSource from '@templates/separator?raw'
 
 export function SeparatorDoc() {
   return (
@@ -48,7 +48,7 @@ export function SeparatorDoc() {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add separator"
-        manual={separatorTemplate}
+        manual={separatorSource}
         dependencies={['clsx']}
       />
 

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { contextMenuTemplate } from '@templates/context-menu'
+import contextmenuSource from '@templates/context-menu?raw'
 
 function ContextMenuPreview() {
   const [isOpen, setIsOpen] = useState(false)
@@ -115,7 +115,7 @@ const handleAction = (action) => {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add context-menu"
-        manual={contextMenuTemplate}
+        manual={contextmenuSource}
         dependencies={['clsx']}
       />
 

@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { labelTemplate } from '@templates/label'
+import labelSource from '@templates/label?raw'
 
 export function LabelDoc() {
   return (
@@ -34,7 +34,7 @@ export function LabelDoc() {
 
       <InstallationSteps
         cli="npx native-shadcn add label"
-        manual={labelTemplate}
+        manual={labelSource}
         dependencies={['clsx']}
       />
 

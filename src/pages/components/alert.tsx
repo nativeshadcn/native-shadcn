@@ -1,7 +1,7 @@
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { alertTemplate } from '@templates/alert'
+import alertSource from '@templates/alert?raw'
 
 export function AlertDoc() {
   return (
@@ -107,7 +107,7 @@ export function AlertDoc() {
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add alert"
-        manual={alertTemplate}
+        manual={alertSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

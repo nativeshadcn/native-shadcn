@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { errorStateTemplate } from '@templates/error-state'
+import errorstateSource from '@templates/error-state?raw'
 
 function ErrorStatePreview() {
   const [retryCount, setRetryCount] = useState(0)
@@ -65,7 +65,7 @@ import { View } from 'react-native';
       />
       <InstallationSteps
         cli="npx native-shadcn-cli add error-state"
-        manual={errorStateTemplate}
+        manual={errorstateSource}
         dependencies={['class-variance-authority', 'clsx']}
       />
 

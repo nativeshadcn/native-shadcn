@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallationSteps } from '@/components/installation-steps'
 import { CodeBlock } from '@/components/code-block'
-import { formTemplate } from '@templates/form'
+import formSource from '@templates/form?raw'
 
 // Functional form preview
 function FormPreview() {
@@ -171,7 +171,7 @@ export function FormExample() {
 
       <InstallationSteps
         cli="npx native-shadcn add form"
-        manual={formTemplate}
+        manual={formSource}
         dependencies={['react-hook-form', '@hookform/resolvers', 'zod', 'clsx']}
       />
 
