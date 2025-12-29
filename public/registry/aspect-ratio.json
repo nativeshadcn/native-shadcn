@@ -1,0 +1,17 @@
+{
+  "name": "aspect-ratio",
+  "type": "registry:ui",
+  "description": "A component for maintaining aspect ratios",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "ui/aspect-ratio.tsx",
+      "content": "import * as React from 'react';\nimport { View } from 'react-native';\nimport { cn } from '@/lib/utils';\n\ninterface AspectRatioProps extends React.ComponentPropsWithoutRef<typeof View> {\n  ratio?: number;\n}\n\nconst AspectRatio = React.forwardRef<\n  React.ElementRef<typeof View>,\n  AspectRatioProps\n>(({ ratio = 1, className, children, style, ...props }, ref) => {\n  return (\n    <View\n      ref={ref}\n      className={cn('relative w-full', className)}\n      style={[{ aspectRatio: ratio }, style]}\n      {...props}\n    >\n      {children}\n    </View>\n  );\n});\nAspectRatio.displayName = 'AspectRatio';\n\nexport { AspectRatio };\nexport type { AspectRatioProps };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

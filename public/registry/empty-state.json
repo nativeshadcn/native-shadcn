@@ -1,0 +1,19 @@
+{
+  "name": "empty-state",
+  "type": "registry:ui",
+  "description": "An empty state component for no data scenarios",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "devDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "ui/empty-state.tsx",
+      "content": "import * as React from 'react';\nimport { View, Text, Pressable } from 'react-native';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\n// Empty State Context for composable architecture\ntype EmptyStateContextValue = {\n  variant?: 'default' | 'inline' | 'card';\n};\n\nconst EmptyStateContext = React.createContext<EmptyStateContextValue | undefined>(undefined);\n\nfunction useEmptyState() {\n  return React.useContext(EmptyStateContext);\n}\n\n// Root EmptyState Component\nconst emptyStateVariants = cva('items-center justify-center', {\n  variants: {\n    variant: {\n      default: 'flex-1 px-6 py-12',\n      inline: 'py-8 px-4',\n      card: 'bg-card rounded-lg border border-border p-8',\n    },\n  },\n  defaultVariants: {\n    variant: 'default',\n  },\n});\n\nexport interface EmptyStateProps\n  extends React.ComponentPropsWithoutRef<typeof View>,\n    VariantProps<typeof emptyStateVariants> {}\n\nconst EmptyState = React.forwardRef<React.ElementRef<typeof View>, EmptyStateProps>(\n  ({ className, variant, ...props }, ref) => {\n    return (\n      <EmptyStateContext.Provider value={{ variant }}>\n        <View\n          ref={ref}\n          className={cn(emptyStateVariants({ variant, className }))}\n          {...props}\n        />\n      </EmptyStateContext.Provider>\n    );\n  }\n);\n\nEmptyState.displayName = 'EmptyState';\n\n// EmptyState Icon\nexport interface EmptyStateIconProps extends React.ComponentPropsWithoutRef<typeof View> {\n  children: React.ReactNode;\n}\n\nconst EmptyStateIcon = React.forwardRef<React.ElementRef<typeof View>, EmptyStateIconProps>(\n  ({ className, children, ...props }, ref) => {\n    return (\n      <View ref={ref} className={cn('mb-4', className)} {...props}>\n        {children}\n      </View>\n    );\n  }\n);\n\nEmptyStateIcon.displayName = 'EmptyStateIcon';\n\n// EmptyState Title\nexport interface EmptyStateTitleProps extends React.ComponentPropsWithoutRef<typeof Text> {}\n\nconst EmptyStateTitle = React.forwardRef<React.ElementRef<typeof Text>, EmptyStateTitleProps>(\n  ({ className, ...props }, ref) => {\n    return (\n      <Text\n        ref={ref}\n        className={cn('text-lg font-semibold text-center text-foreground mb-2', className)}\n        {...props}\n      />\n    );\n  }\n);\n\nEmptyStateTitle.displayName = 'EmptyStateTitle';\n\n// EmptyState Description\nexport interface EmptyStateDescriptionProps extends React.ComponentPropsWithoutRef<typeof Text> {}\n\nconst EmptyStateDescription = React.forwardRef<\n  React.ElementRef<typeof Text>,\n  EmptyStateDescriptionProps\n>(({ className, ...props }, ref) => {\n  return (\n    <Text\n      ref={ref}\n      className={cn('text-sm text-center text-muted-foreground max-w-sm', className)}\n      {...props}\n    />\n  );\n});\n\nEmptyStateDescription.displayName = 'EmptyStateDescription';\n\n// EmptyState Actions\nexport interface EmptyStateActionsProps extends React.ComponentPropsWithoutRef<typeof View> {}\n\nconst EmptyStateActions = React.forwardRef<\n  React.ElementRef<typeof View>,\n  EmptyStateActionsProps\n>(({ className, ...props }, ref) => {\n  return <View ref={ref} className={cn('mt-6 flex-row gap-2', className)} {...props} />;\n});\n\nEmptyStateActions.displayName = 'EmptyStateActions';\n\nexport {\n  EmptyState,\n  EmptyStateIcon,\n  EmptyStateTitle,\n  EmptyStateDescription,\n  EmptyStateActions,\n};\n",
+      "type": "registry:ui"
+    }
+  ]
+}

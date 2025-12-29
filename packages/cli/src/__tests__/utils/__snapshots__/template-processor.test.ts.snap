@@ -1,0 +1,114 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`template-processor > generateImport > should generate default import 1`] = `"import Button from '@/components/ui/button';"`;
+
+exports[`template-processor > generateImport > should generate import from package 1`] = `"import { View } from 'react-native';"`;
+
+exports[`template-processor > generateImport > should generate import from relative path 1`] = `"import { cn } from './lib/utils';"`;
+
+exports[`template-processor > generateImport > should generate named import 1`] = `"import { Button } from '@/components/ui/button';"`;
+
+exports[`template-processor > generateTypeImport > should generate multiple types import 1`] = `"import type { Config, Theme } from '@/lib/types';"`;
+
+exports[`template-processor > generateTypeImport > should generate type import 1`] = `"import type { Config } from '@/lib/types';"`;
+
+exports[`template-processor > generateTypeImport > should generate type import from package 1`] = `"import type { ViewProps } from 'react-native';"`;
+
+exports[`template-processor > processTemplate > should handle missing variables 1`] = `"Hello, Alice! Welcome to {{ place }}."`;
+
+exports[`template-processor > processTemplate > should handle variables with whitespace 1`] = `"John Doe"`;
+
+exports[`template-processor > processTemplate > should process component template 1`] = `
+"import * as React from 'react';
+import { Pressable } from 'react-native';
+import { cn } from '@/lib/utils';
+
+export const Button = React.forwardRef<
+  React.ElementRef<typeof Pressable>,
+  React.ComponentPropsWithoutRef<typeof Pressable>
+>(({ className, ...props }, ref) => {
+  return (
+    <Pressable
+      ref={ref}
+      className={cn('inline-flex items-center justify-center', className)}
+      {...props}
+    />
+  );
+});
+Button.displayName = 'Button';"
+`;
+
+exports[`template-processor > processTemplate > should replace multiple variables 1`] = `"export const Button = () => <Pressable />;"`;
+
+exports[`template-processor > processTemplate > should replace single variable 1`] = `"Hello, World!"`;
+
+exports[`template-processor > template snapshots > should match complete UI component template 1`] = `
+"import * as React from 'react';
+import { Pressable, Text } from 'react-native';
+import { cn } from '@/lib/utils';
+
+export interface ButtonProps
+  extends React.ComponentPropsWithoutRef<typeof Pressable> {
+  variant?: 'default' | 'outline' | 'ghost';
+}
+
+const Button = React.forwardRef<
+  React.ElementRef<typeof Pressable>,
+  ButtonProps
+>(({ className, variant = 'default', ...props }, ref) => {
+  return (
+    <Pressable
+      ref={ref}
+      className={cn(
+        'inline-flex items-center justify-center rounded-md',
+        {
+          'bg-primary': variant === 'default',
+          'border border-input': variant === 'outline',
+          'hover:bg-accent': variant === 'ghost',
+        },
+        className
+      )}
+      {...props}
+    />
+  );
+});
+Button.displayName = 'Button';
+
+export { Button };"
+`;
+
+exports[`template-processor > template snapshots > should match lib utils template 1`] = `
+"import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(amount);
+}"
+`;
+
+exports[`template-processor > toKebabCase > should convert PascalCase to kebab-case 1`] = `"button-component"`;
+
+exports[`template-processor > toKebabCase > should convert camelCase to kebab-case 1`] = `"button-component"`;
+
+exports[`template-processor > toKebabCase > should handle acronyms 1`] = `"uibutton"`;
+
+exports[`template-processor > toKebabCase > should handle already kebab-case 1`] = `"button-component"`;
+
+exports[`template-processor > toKebabCase > should handle single word 1`] = `"button"`;
+
+exports[`template-processor > toPascalCase > should convert kebab-case to PascalCase 1`] = `"ButtonComponent"`;
+
+exports[`template-processor > toPascalCase > should convert snake_case to PascalCase 1`] = `"ButtonComponent"`;
+
+exports[`template-processor > toPascalCase > should handle already PascalCase 1`] = `"ButtonComponent"`;
+
+exports[`template-processor > toPascalCase > should handle multi-word with mixed separators 1`] = `"MyButtonComponent"`;
+
+exports[`template-processor > toPascalCase > should handle single word 1`] = `"Button"`;

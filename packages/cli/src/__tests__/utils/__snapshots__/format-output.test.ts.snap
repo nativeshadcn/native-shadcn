@@ -1,0 +1,88 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`format-output > CLI output snapshots > should match complete add command output 1`] = `
+{
+  "action": "add",
+  "components": [
+    "button",
+    "card",
+    "input",
+  ],
+  "dependencies": [
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge",
+  ],
+  "devDependencies": [],
+  "message": "Success! 3 components have been added.",
+  "success": true,
+}
+`;
+
+exports[`format-output > CLI output snapshots > should match complete init command output 1`] = `
+{
+  "action": "init",
+  "config": {
+    "aliases": {
+      "components": "@/components",
+      "utils": "@/lib/utils",
+    },
+    "style": "nativewind",
+    "tailwind": {
+      "config": "tailwind.config.js",
+      "css": "global.css",
+    },
+    "typescript": true,
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "nativewind",
+  ],
+  "devDependencies": [
+    "tailwindcss",
+  ],
+  "filesCreated": [
+    "components.json",
+    "lib/utils.ts",
+    "global.css",
+  ],
+  "message": "Success! Your project has been initialized.",
+  "success": true,
+}
+`;
+
+exports[`format-output > CLI output snapshots > should match error output 1`] = `
+{
+  "action": "add",
+  "components": [
+    "nonexistent-component",
+  ],
+  "error": "Component "nonexistent-component" not found in registry",
+  "success": false,
+}
+`;
+
+exports[`format-output > formatComponentList > should format multiple components 1`] = `"button, card, input and dialog"`;
+
+exports[`format-output > formatComponentList > should format single component 1`] = `"button"`;
+
+exports[`format-output > formatComponentList > should format two components 1`] = `"button and card"`;
+
+exports[`format-output > formatComponentList > should handle empty array 1`] = `""`;
+
+exports[`format-output > formatDependencyMessage > should format both dependencies and dev dependencies 1`] = `"2 dependencies and 2 dev dependencies"`;
+
+exports[`format-output > formatDependencyMessage > should format dev dependencies only 1`] = `"1 dev dependency"`;
+
+exports[`format-output > formatDependencyMessage > should format multiple dependencies 1`] = `"2 dependencies"`;
+
+exports[`format-output > formatDependencyMessage > should format single dependency 1`] = `"1 dependency"`;
+
+exports[`format-output > formatDependencyMessage > should handle singular forms 1`] = `"1 dependency and 1 dev dependency"`;
+
+exports[`format-output > formatSuccessMessage > should format init success message 1`] = `"Success! Your project has been initialized."`;
+
+exports[`format-output > formatSuccessMessage > should format multiple components add success 1`] = `"Success! 5 components have been added."`;
+
+exports[`format-output > formatSuccessMessage > should format single component add success 1`] = `"Success! Component has been added."`;

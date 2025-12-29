@@ -1,0 +1,73 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`schema validation > schema snapshots > should match lib component schema snapshot 1`] = `
+{
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+  ],
+  "description": "Utility functions",
+  "files": [
+    {
+      "content": "export function cn() {}",
+      "path": "lib/utils.ts",
+      "type": "registry:lib",
+    },
+  ],
+  "name": "utils",
+  "type": "registry:lib",
+}
+`;
+
+exports[`schema validation > schema snapshots > should match minimal component schema snapshot 1`] = `
+{
+  "files": [
+    {
+      "content": "export const Separator = () => <View />",
+      "path": "ui/separator.tsx",
+      "type": "registry:ui",
+    },
+  ],
+  "name": "separator",
+  "type": "registry:ui",
+}
+`;
+
+exports[`schema validation > schema snapshots > should match registry index item schema snapshot 1`] = `
+{
+  "dependencies": [
+    "class-variance-authority",
+  ],
+  "description": "A button component",
+  "files": [
+    "ui/button.tsx",
+  ],
+  "name": "button",
+  "registryDependencies": [
+    "utils",
+  ],
+  "type": "registry:ui",
+}
+`;
+
+exports[`schema validation > schema snapshots > should match registry item schema snapshot 1`] = `
+{
+  "dependencies": [
+    "class-variance-authority",
+  ],
+  "description": "A button component",
+  "files": [
+    {
+      "content": "export const Button = () => <View />",
+      "path": "ui/button.tsx",
+      "target": "",
+      "type": "registry:ui",
+    },
+  ],
+  "name": "button",
+  "registryDependencies": [
+    "utils",
+  ],
+  "type": "registry:ui",
+}
+`;
